@@ -93,6 +93,28 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(solucao_otima, solucao.bfs(estado))
         self.assertEqual(solucao_otima, solucao.astar_hamming(estado))
         self.assertEqual(solucao_otima, solucao.astar_manhattan(estado))
-
+        
+    def test_node_init(self):
+        """
+        Testa inicializaçao de Nodo
+        """
+        estado = "1235_6478"
+        pai = None
+        acao = "direita"
+        custo = 1
+        nodo = solucao.Nodo(estado,pai,acao,custo)
+        self.assertEqual(estado,nodo.estado)
+        self.assertEqual(pai,nodo.pai)
+        self.assertEqual(acao,nodo.acao)
+        self.assertEqual(custo,nodo.custo)
+        
+    def test_busca_grafo_init(self):
+        """
+        Testa inicializaçao da classe de busca
+        """
+        funcao_de_desempilhar = lambda x:x.pop()
+        busca_grafo = solucao.busca_grafo(funcao_de_desempilhar)
+        self.assertEqual(busca_grafo.func_desempilha, funcao_de_desempilhar)      
+                
 if __name__ == '__main__':
     unittest.main()
