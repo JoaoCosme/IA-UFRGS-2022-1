@@ -31,16 +31,68 @@ def cria_nodo(estado, pai, acao, custo):
     return Nodo(estado, pai, acao, custo
                         
 def sucessor(estado):
-    """
-    Recebe um estado (string) e retorna uma lista de tuplas (ação,estado atingido)
-    para cada ação possível no estado recebido.
-    Tanto a ação quanto o estado atingido são strings também.
-    :param estado:
-    :return:
-    """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    acoes_possiveis = []
+    indice = estado.find('_')
+    if podeMoverAbaixo(indice):
+        acoes_possiveis.append("abaixo")
+    if podeMoverAcima(indice):
+        acoes_possiveis.append("acima")
+    if podeMoverDireita(indice):
+        acoes_possiveis.append("direita")
+    if podeMoverEsquerda(indice):
+        acoes_possiveis.append("esquerda")
+    return achaSucessores(acoes_possiveis, estado, indice)
+    
+'''Funções auxiliares da função sucessor:
+ação direita: swap [i] com [i+1] || pode ir para direita se índice != 2, != 5 != 8
+ação esquerda: swap [i] com [i-1] || pode ir para esquerda se índice != 0, != 3, != 6
+ação cima: swap [i] com [i-3] || pode mover para cima quando índice > 2
+ação baixo: swap[i] com [i+3] || pode mover para baixo quando índice < 6
+'''
+#funções que encontram movimentos possíveis:
+def podeMoverDireita(indice):
+    if indice not in (2,5,8):
+        return True
+    else:
+        return False
 
+def podeMoverEsquerda(indice):
+    if indice not in (0,3,6):
+        return True
+    else:
+        return False
+
+def podeMoverAbaixo(indice):
+    if indice < 6:
+        return True
+    else:
+        return False
+
+def podeMoverAcima(indice):
+    if indice > 2:
+        return True
+    else:
+        return False
+
+#cria estados atualizados
+def novoEstado(estado, indice, novoIndice):
+    proxEstado = list(estado)
+    proxEstado[indice], proxEstado[novoIndice] = proxEstado[novoIndice], proxEstado[indice]
+    return ''.join(proxEstado)
+
+#cria tuplas de sucessores
+def achaSucessores(acoes_possiveis, estado, indice):
+    sucessores = []
+    for acao in acoes_possiveis:
+        if acao == "direita":
+            sucessores.append((acao, novoEstado(estado, indice, indice+1)))
+        elif acao == "esquerda":
+            sucessores.append((acao, novoEstado(estado, indice, indice-1)))
+        elif acao == "acima":
+            sucessores.append((acao, novoEstado(estado, indice, indice-3)))
+        elif acao == "abaixo":
+            sucessores.append((acao, novoEstado(estado, indice, indice+3)))
+    return sucessores
 
 def expande(nodo):
     """
