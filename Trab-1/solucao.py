@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
@@ -14,17 +17,8 @@ class Nodo:
         self.pai = pai
         self.acao = acao
         self.custo = custo
-
-
-class busca_grafo:
-    """
-    Classe que possui a estrutura geral do algoritmo de busca. Recebe o algoritmo que implementa a fronteira.
-    """
-    def __init__(self,func_desempilha):
-        self.func_desempilha = func_desempilha
-    def busca_grafo(nodo):
-        raise NotImplementedError
-
+    def retorna_caminho(self):
+        return []
 
 
 def cria_nodo(estado, pai, acao, custo):
@@ -93,6 +87,25 @@ def determina_estados(acoes_possiveis, estado, indice):
         elif acao == "abaixo":
             sucessores.append((acao, novo_estado(estado, indice, indice+3)))
     return sucessores
+
+
+def e_estado_final(nodo:Nodo) -> bool:
+    return True
+
+def busca_grafo(funcao_desempilha,estado):
+    conjunto_explorados:List[Nodo] = []
+    fronteira:List[Nodo] = [Nodo(estado)]
+    falha = False
+    while not falha:
+        if len(fronteira)==0 : 
+            falha=True
+            continue
+        estado_atual:Nodo = funcao_desempilha(fronteira)
+        if e_estado_final(estado_atual): return Nodo.retorna_caminho()
+        if estado_atual not in conjunto_explorados:
+            conjunto_explorados.append(estado_atual)
+            fronteira.append(expande(estado_atual))
+            
 
 def expande(nodo):
     """
