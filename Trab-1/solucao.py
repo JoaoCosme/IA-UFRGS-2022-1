@@ -28,7 +28,7 @@ class busca_grafo:
 
 
 def cria_nodo(estado, pai, acao, custo):
-    return Nodo(estado, pai, acao, custo
+    return Nodo(estado, pai, acao, custo)
                         
 def sucessor(estado):
     acoes_possiveis = []
