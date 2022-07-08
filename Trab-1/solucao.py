@@ -15,6 +15,14 @@ class Nodo:
         self.acao = acao
         self.custo = custo
 
+class busca_grafo:
+    """
+    Classe que possui a estrutura geral do algoritmo de busca. Recebe o algoritmo que implementa a fronteira.
+    """
+    def __init__(self,func_desempilha):
+        self.func_desempilha = func_desempilha
+
+
 def sucessor(estado):
     """
     Recebe um estado (string) e retorna uma lista de tuplas (ação,estado atingido)

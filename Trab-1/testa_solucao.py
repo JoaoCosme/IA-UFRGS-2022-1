@@ -107,6 +107,14 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(pai,nodo.pai)
         self.assertEqual(acao,nodo.acao)
         self.assertEqual(custo,nodo.custo)
+        
+    def test_busca_grafo_init(self):
+        """
+        Testa inicializaçao da classe de busca
+        """
+        funcao_de_desempilhar = lambda x:x.pop()
+        busca_grafo = solucao.busca_grafo(funcao_de_desempilhar)
+        self.assertEqual(busca_grafo.func_desempilha, funcao_de_desempilhar)      
                 
 if __name__ == '__main__':
     unittest.main()
