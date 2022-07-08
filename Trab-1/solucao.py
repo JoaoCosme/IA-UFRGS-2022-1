@@ -33,15 +33,15 @@ def cria_nodo(estado, pai, acao, custo):
 def sucessor(estado):
     acoes_possiveis = []
     indice = estado.find('_')
-    if podeMoverAbaixo(indice):
+    if pode_mover_abaixo(indice):
         acoes_possiveis.append("abaixo")
-    if podeMoverAcima(indice):
+    if pode_mover_acima(indice):
         acoes_possiveis.append("acima")
-    if podeMoverDireita(indice):
+    if pode_mover_direita(indice):
         acoes_possiveis.append("direita")
-    if podeMoverEsquerda(indice):
+    if pode_mover_esquerda(indice):
         acoes_possiveis.append("esquerda")
-    return achaSucessores(acoes_possiveis, estado, indice)
+    return determina_estados(acoes_possiveis, estado, indice)
     
 '''Funções auxiliares da função sucessor:
 ação direita: swap [i] com [i+1] || pode ir para direita se índice != 2, != 5 != 8
@@ -50,48 +50,48 @@ ação cima: swap [i] com [i-3] || pode mover para cima quando índice > 2
 ação baixo: swap[i] com [i+3] || pode mover para baixo quando índice < 6
 '''
 #funções que encontram movimentos possíveis:
-def podeMoverDireita(indice):
+def pode_mover_direita(indice):
     if indice not in (2,5,8):
         return True
     else:
         return False
 
-def podeMoverEsquerda(indice):
+def pode_mover_esquerda(indice):
     if indice not in (0,3,6):
         return True
     else:
         return False
 
-def podeMoverAbaixo(indice):
+def pode_mover_abaixo(indice):
     if indice < 6:
         return True
     else:
         return False
 
-def podeMoverAcima(indice):
+def pode_mover_acima(indice):
     if indice > 2:
         return True
     else:
         return False
 
 #cria estados atualizados
-def novoEstado(estado, indice, novoIndice):
-    proxEstado = list(estado)
-    proxEstado[indice], proxEstado[novoIndice] = proxEstado[novoIndice], proxEstado[indice]
-    return ''.join(proxEstado)
+def novo_estado(estado, indice, novo_indice):
+    prox_estado = list(estado)
+    prox_estado[indice], prox_estado[novo_indice] = prox_estado[novo_indice], prox_estado[indice]
+    return ''.join(prox_estado)
 
 #cria tuplas de sucessores
-def achaSucessores(acoes_possiveis, estado, indice):
+def determina_estados(acoes_possiveis, estado, indice):
     sucessores = []
     for acao in acoes_possiveis:
         if acao == "direita":
-            sucessores.append((acao, novoEstado(estado, indice, indice+1)))
+            sucessores.append((acao, novo_estado(estado, indice, indice+1)))
         elif acao == "esquerda":
-            sucessores.append((acao, novoEstado(estado, indice, indice-1)))
+            sucessores.append((acao, novo_estado(estado, indice, indice-1)))
         elif acao == "acima":
-            sucessores.append((acao, novoEstado(estado, indice, indice-3)))
+            sucessores.append((acao, novo_estado(estado, indice, indice-3)))
         elif acao == "abaixo":
-            sucessores.append((acao, novoEstado(estado, indice, indice+3)))
+            sucessores.append((acao, novo_estado(estado, indice, indice+3)))
     return sucessores
 
 def expande(nodo):
