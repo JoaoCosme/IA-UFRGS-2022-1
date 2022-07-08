@@ -2,7 +2,7 @@ class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado, pai, acao, custo):
+    def __init__(self, estado:str, pai:object, acao:str, custo:int):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
@@ -10,9 +10,10 @@ class Nodo:
         :param acao:str, acao a partir do pai que leva a este nodo (None no caso do nó raiz)
         :param custo:int, custo do caminho da raiz até este nó
         """
-        # substitua a linha abaixo pelo seu codigo
-        raise NotImplementedError
-
+        self.estado = estado
+        self.pai = pai
+        self.acao = acao
+        self.custo = custo
 
 def sucessor(estado):
     """
