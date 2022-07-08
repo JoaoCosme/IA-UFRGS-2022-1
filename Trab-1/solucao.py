@@ -21,6 +21,8 @@ class busca_grafo:
     """
     def __init__(self,func_desempilha):
         self.func_desempilha = func_desempilha
+    def busca_grafo(nodo):
+        raise NotImplementedError
 
 
 def sucessor(estado):
