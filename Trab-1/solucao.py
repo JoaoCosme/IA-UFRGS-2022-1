@@ -1,39 +1,7 @@
 from typing import List
-
-
-ESTADO_FINAL = "12345678_"
-POSICAO_VAZIA = "_"
-NUMERO_COLUNAS = 3
-NUMERO_LINHAS = 3
-
-class Nodo:
-    """
-    Implemente a classe Nodo com os atributos descritos na funcao init
-    """
-    def __init__(self, estado:str, pai:any=None, acao:str=None, custo:int=None):
-        """
-        Inicializa o nodo com os atributos recebidos
-        :param estado:str, representacao do estado do 8-puzzle
-        :param pai:Nodo, referencia ao nodo pai, (None no caso do nó raiz)
-        :param acao:str, acao a partir do pai que leva a este nodo (None no caso do nó raiz)
-        :param custo:int, custo do caminho da raiz até este nó
-        """
-        self.estado = estado
-        self.pai:Nodo = pai
-        self.acao = acao
-        self.custo = custo
-    def retorna_caminho(self,caminho:List=None):
-        if caminho:
-            caminho.append(self)
-        else:
-            caminho = [self]            
-        
-        if self.pai: 
-            return self.pai.retorna_caminho(caminho) 
-        else: 
-            caminho.reverse()
-            return caminho
-
+import manhattan
+from nodo import Nodo
+from constantes import ESTADO_FINAL
 
 def cria_nodo(estado, pai, acao, custo):
     return Nodo(estado, pai, acao, custo)
@@ -108,7 +76,7 @@ def e_estado_final(nodo:Nodo) -> bool:
 
 def busca_grafo(funcao_desempilha,estado):
     conjunto_explorados:List[Nodo] = []
-    fronteira:List[Nodo] = [Nodo(estado)]
+    fronteira:List[Nodo] = [Nodo(estado,None,None,0)]
     falha = False
     while not falha:
         if len(fronteira)==0 : 
@@ -189,4 +157,4 @@ def astar_manhattan(estado):
     :return:
     """
     # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    return busca_grafo(manhattan.desempilha,estado)

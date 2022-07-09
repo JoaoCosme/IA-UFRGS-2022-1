@@ -1,5 +1,6 @@
 import unittest
 import solucao as solucao
+from nodo import Nodo
 import manhattan
 
 
@@ -23,7 +24,7 @@ class TestaSolucao(unittest.TestCase):
         Testa a função expande para um Node com estado "185432_67" e custo 2
         :return:
         """
-        pai = solucao.Nodo("185432_67", None, "abaixo", 2)  # o pai do pai esta incorreto, mas nao interfere no teste
+        pai = Nodo("185432_67", None, "abaixo", 2)  # o pai do pai esta incorreto, mas nao interfere no teste
         # a resposta esperada deve conter nodos com os seguintes atributos (ordem dos nodos nao importa)
         resposta_esperada = {
             ("185_32467", pai, "acima", 3),
@@ -103,7 +104,7 @@ class TestaSolucao(unittest.TestCase):
         pai = None
         acao = "direita"
         custo = 1
-        nodo = solucao.Nodo(estado,pai,acao,custo)
+        nodo = Nodo(estado,pai,acao,custo)
         self.assertEqual(estado,nodo.estado)
         self.assertEqual(pai,nodo.pai)
         self.assertEqual(acao,nodo.acao)
@@ -113,27 +114,27 @@ class TestaSolucao(unittest.TestCase):
         """
         Testa verificaçao de estado final
         """
-        self.assertTrue(solucao.e_estado_final(solucao.Nodo("12345678_")))
-        self.assertFalse(solucao.e_estado_final(solucao.Nodo("1235_6478")))
+        self.assertTrue(solucao.e_estado_final(Nodo("12345678_")))
+        self.assertFalse(solucao.e_estado_final(Nodo("1235_6478")))
         
     def test_retorna_caminho(self):
         """
         Testa se caminho é retornado corretamente
         """
-        pai = solucao.Nodo("123456_78")
-        filho = solucao.Nodo("1234567_8",pai)
-        neto = solucao.Nodo("12345678_",filho)
+        pai = Nodo("123456_78")
+        filho = Nodo("1234567_8",pai)
+        neto = Nodo("12345678_",filho)
         self.assertEqual([pai,filho,neto],neto.retorna_caminho())
     def testa_calculo_manhattan(self):
         """
         Testa calculos de manhattan
         """
-        nodo_uma_peca_fora_horizontal_dist_1 = solucao.Nodo("1234567_8")
-        nodo_duas_peca_fora_dist_1 = solucao.Nodo("123456_78")
-        nodo_uma_peca_fora_vertical_dist_1 = solucao.Nodo("12345_786")
-        nodo_uma_peca_fora_vertical_e_horizontal = solucao.Nodo("_2341678_")
-        nodo_duas_horizontal_uma_vertical = solucao.Nodo("12345_6__")
-        nodo_baguncado = solucao.Nodo("_23145678")
+        nodo_uma_peca_fora_horizontal_dist_1 = Nodo("1234567_8")
+        nodo_duas_peca_fora_dist_1 = Nodo("123456_78")
+        nodo_uma_peca_fora_vertical_dist_1 = Nodo("12345_786")
+        nodo_uma_peca_fora_vertical_e_horizontal = Nodo("_2341678_")
+        nodo_duas_horizontal_uma_vertical = Nodo("12345_6__")
+        nodo_baguncado = Nodo("_23145678")
         
         self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1))
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1))
@@ -145,7 +146,7 @@ class TestaSolucao(unittest.TestCase):
         """
         Testa se, dado uma fronteira, A* manhattan retorna o proximo nodo corretamente
         """
-        fronteira = [solucao.Nodo("1234567_8"),solucao.Nodo("1245673_8"),solucao.Nodo("7812345_6"),]
+        fronteira = [Nodo("1234567_8"),Nodo("1245673_8"),Nodo("7812345_6"),]
         self.assertEqual("1234567_8",manhattan.desempilha(fronteira).estado)
                     
 if __name__ == '__main__':

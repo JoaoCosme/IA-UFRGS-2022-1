@@ -1,4 +1,4 @@
-from solucao import NUMERO_COLUNAS,NUMERO_LINHAS
+from constantes import NUMERO_COLUNAS,NUMERO_LINHAS
 
 def calcula_distancia_vertical(posicao_correta, posicao_atual): 
     return abs(posicao_correta//NUMERO_LINHAS-posicao_atual//NUMERO_LINHAS)

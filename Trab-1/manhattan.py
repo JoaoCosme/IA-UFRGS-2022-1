@@ -1,5 +1,6 @@
 from typing import List
-from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA
+from nodo import Nodo
+from constantes import ESTADO_FINAL, POSICAO_VAZIA
 from funcoes_distancia import *
 
 DISTANCIA = "distancia"
