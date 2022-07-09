@@ -129,9 +129,11 @@ class TestaSolucao(unittest.TestCase):
         Testa calculos de manhattan
         """
         nodo_uma_peca_fora_horizontal_dist_1 = solucao.Nodo("1234567_8")
-        nodo_uma_peca_fora_horizontal_dist_2 = solucao.Nodo("123456_78")
+        nodo_duas_peca_fora_dist_1 = solucao.Nodo("123456_78")
+        nodo_uma_peca_fora_vertical_1 = solucao.Nodo("12345_786")
         self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1))
-        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_2))
+        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1))
+        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_1))
         
         
 

@@ -1,10 +1,20 @@
 from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA
 
 
+NUMERO_COLUNAS = 3
+
 def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
     posicao_correta = ESTADO_FINAL.find(numero)
     posicao_atual = estado_atual.find(numero)
-    return abs(posicao_correta - posicao_atual)
+    
+    na_coluna_correta = lambda posicao_correta,posicao_atual:posicao_correta%NUMERO_COLUNAS ==posicao_atual%NUMERO_COLUNAS
+    na_linha_correta = lambda posicao_correta,posicao_atual:abs(posicao_correta-posicao_atual)<2
+    
+    if na_linha_correta(posicao_correta,posicao_atual) :
+        return abs(posicao_correta-posicao_atual)
+    elif na_coluna_correta(posicao_correta,posicao_atual):
+        return abs(posicao_correta//3-posicao_atual//3)    
+    return 0
     
 
 def calcula_distancia_manhattan(nodo:Nodo):
