@@ -1,6 +1,7 @@
 from typing import List
 
 
+ESTADO_FINAL = "12345678_"
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
@@ -90,7 +91,7 @@ def determina_estados(acoes_possiveis, estado, indice):
 
 
 def e_estado_final(nodo:Nodo) -> bool:
-    return True
+    return nodo.estado == ESTADO_FINAL
 
 def busca_grafo(funcao_desempilha,estado):
     conjunto_explorados:List[Nodo] = []
