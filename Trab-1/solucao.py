@@ -6,7 +6,7 @@ class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado:str, pai:object=None, acao:str=None, custo:int=None):
+    def __init__(self, estado:str, pai:any=None, acao:str=None, custo:int=None):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
@@ -15,11 +15,15 @@ class Nodo:
         :param custo:int, custo do caminho da raiz até este nó
         """
         self.estado = estado
-        self.pai = pai
+        self.pai:Nodo = pai
         self.acao = acao
         self.custo = custo
-    def retorna_caminho(self):
-        return []
+    def retorna_caminho(self,caminho:List=None):
+        caminho.append(self)
+        if self.pai: 
+            return self.pai.retorna_caminho(caminho) 
+        else: 
+            return caminho
 
 
 def cria_nodo(estado, pai, acao, custo):
