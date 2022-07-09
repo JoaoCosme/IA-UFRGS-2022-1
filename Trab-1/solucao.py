@@ -74,20 +74,21 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado):
-    conjunto_explorados:List[Nodo] = []
+def busca_grafo(funcao_desempilha,estado) -> List[Nodo]:
+    conjunto_explorados:List[str] = []
     fronteira:List[Nodo] = [Nodo(estado,None,None,0)]
-    falha = False
+    falha:bool = False
     while not falha:
         if len(fronteira)==0 : 
             falha=True
             continue
         estado_atual:Nodo = funcao_desempilha(fronteira)
-        if e_estado_final(estado_atual): return Nodo.retorna_caminho()
-        if estado_atual not in conjunto_explorados:
-            conjunto_explorados.append(estado_atual)
-            fronteira.append(expande(estado_atual))
-            
+        fronteira.remove(estado_atual)
+        if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
+        if estado_atual.estado not in conjunto_explorados:
+            conjunto_explorados.append(estado_atual.estado)
+            fronteira.extend(expande(estado_atual))
+    return None
 
 def expande(nodo):
     """
