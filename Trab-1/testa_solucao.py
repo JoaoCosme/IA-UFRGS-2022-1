@@ -108,13 +108,12 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(acao,nodo.acao)
         self.assertEqual(custo,nodo.custo)
         
-    def test_busca_grafo_init(self):
+    def test_e_estado_final(self):
         """
-        Testa inicializaçao da classe de busca
+        Testa verificaçao de estado final
         """
-        funcao_de_desempilhar = lambda x:x.pop()
-        busca_grafo = solucao.busca_grafo(funcao_de_desempilhar)
-        self.assertEqual(busca_grafo.func_desempilha, funcao_de_desempilhar)      
+        self.assertTrue(solucao.e_estado_final(solucao.Nodo("12345678_")))
+        self.assertFalse(solucao.e_estado_final(solucao.Nodo("1235_6478")))
                 
 if __name__ == '__main__':
     unittest.main()

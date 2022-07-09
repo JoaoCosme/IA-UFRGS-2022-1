@@ -6,7 +6,7 @@ class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado:str, pai:object, acao:str, custo:int):
+    def __init__(self, estado:str, pai:object=None, acao:str=None, custo:int=None):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
