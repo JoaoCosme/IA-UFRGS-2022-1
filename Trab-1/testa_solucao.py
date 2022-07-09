@@ -135,6 +135,7 @@ class TestaSolucao(unittest.TestCase):
         nodo_uma_peca_fora_vertical_e_horizontal = Nodo("_2341678_")
         nodo_duas_horizontal_uma_vertical = Nodo("12345_6__")
         nodo_baguncado = Nodo("_23145678")
+        nodo_baguncado_2 = Nodo("4567812_3")
         
         self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1))
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1))
@@ -142,6 +143,7 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_e_horizontal))
         self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical))
         self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado))
+        self.assertEqual(13,manhattan.calcula_distancia_manhattan(nodo_baguncado_2))
     def testa_fronteira_astar_manhattan(self):
         """
         Testa se, dado uma fronteira, A* manhattan retorna o proximo nodo corretamente

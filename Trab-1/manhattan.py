@@ -18,7 +18,6 @@ def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
         distancia_horizontal = calcula_distancia_horizontal(posicao_atual,posicao_correta)
         distancia_vertical = calcula_distancia_vertical(posicao_atual,posicao_correta)
         return distancia_horizontal+distancia_vertical
-    
 
 def calcula_distancia_manhattan(nodo:Nodo):
     distancia_manhatan = 0
