@@ -122,9 +122,9 @@ class TestaSolucao(unittest.TestCase):
         Testa se caminho é retornado corretamente
         """
         pai = Nodo("123456_78")
-        filho = Nodo("1234567_8",pai)
-        neto = Nodo("12345678_",filho)
-        self.assertEqual([pai,filho,neto],neto.retorna_caminho())
+        filho = Nodo("1234567_8",pai,"direita")
+        neto = Nodo("12345678_",filho,"baixo")
+        self.assertEqual(["direita","baixo"],neto.retorna_caminho())
     def testa_calculo_manhattan(self):
         """
         Testa calculos de manhattan
