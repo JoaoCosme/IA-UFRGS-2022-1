@@ -1,6 +1,4 @@
-
-from operator import mod
-from solucao import Nodo, ESTADO_FINAL
+from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA
 
 
 def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
@@ -12,7 +10,7 @@ def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
 def calcula_distancia_manhattan(nodo:Nodo):
     distancia_manhatan = 0
     for pos in range(len(nodo.estado)):
-        if nodo.estado[pos] != ESTADO_FINAL[pos] and nodo.estado[pos] != "_":
+        if nodo.estado[pos] != ESTADO_FINAL[pos] and nodo.estado[pos] != POSICAO_VAZIA:
             distancia_manhatan += calcula_distancia_posicao(nodo.estado,nodo.estado[pos])
             
     return distancia_manhatan

@@ -2,6 +2,8 @@ from typing import List
 
 
 ESTADO_FINAL = "12345678_"
+POSICAO_VAZIA = "_"
+
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
