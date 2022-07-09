@@ -124,8 +124,16 @@ def expande(nodo):
     :param nodo: objeto da classe Nodo
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    nodos_expandidos= sucessor(nodo.estado)#chama a função sucessor para criar os estados dos nodos filhos
+    list=[]
+    i= 0
+    for x in nodos_expandidos:#para cada estado novo
+        n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 )#cria um nodo flho
+        list.append(n)#coloca os nodos filhos em uma lista de nodos iterável
+        print(vars(n))
+        i= i+1
+    return list
+    
 
 
 def bfs(estado):
