@@ -74,7 +74,12 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado) -> List[Nodo]:
+def busca_grafo(funcao_desempilha,estado):
+    """
+    Recebe umma funcao de desempilha (um metodo) e um estado inicial, executa
+    entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
+    Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
+    """
     conjunto_explorados:List[str] = []
     fronteira:List[Nodo] = [Nodo(estado,None,None,0)]
     falha:bool = False
