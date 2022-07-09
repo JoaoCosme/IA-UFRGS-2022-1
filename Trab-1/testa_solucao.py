@@ -132,11 +132,15 @@ class TestaSolucao(unittest.TestCase):
         nodo_duas_peca_fora_dist_1 = solucao.Nodo("123456_78")
         nodo_uma_peca_fora_vertical_dist_1 = solucao.Nodo("12345_786")
         nodo_uma_peca_fora_vertical_e_horizontal = solucao.Nodo("_2341678_")
+        nodo_duas_horizontal_uma_vertical = solucao.Nodo("12345_6__")
+        nodo_baguncado = solucao.Nodo("_23145678")
+        
         self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1))
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1))
         self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_dist_1))
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_e_horizontal))
-        
+        self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical))
+        self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado))
         
 
                     
