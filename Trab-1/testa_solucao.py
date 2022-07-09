@@ -74,7 +74,7 @@ class TestaSolucao(unittest.TestCase):
               "numero correto de elementos. Nao verificamos se as acoes levam para a solucao!")
 
         # nao ha solucao a partir do estado 185423_67
-        # self.assertIsNone(solucao.astar_manhattan("185423_67"))
+        self.assertIsNone(solucao.astar_manhattan("185423_67"))
 
     def test_dfs(self):
         """
@@ -138,13 +138,13 @@ class TestaSolucao(unittest.TestCase):
         nodo_baguncado = Nodo("_23145678")
         nodo_baguncado_2 = Nodo("4567812_3")
         
-        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1))
-        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1))
-        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_dist_1))
-        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_e_horizontal))
-        self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical))
-        self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado))
-        self.assertEqual(13,manhattan.calcula_distancia_manhattan(nodo_baguncado_2))
+        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal_dist_1.estado))
+        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_duas_peca_fora_dist_1.estado))
+        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_dist_1.estado))
+        self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_e_horizontal.estado))
+        self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical.estado))
+        self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado.estado))
+        self.assertEqual(13,manhattan.calcula_distancia_manhattan(nodo_baguncado_2.estado))
     
     def testa_fronteira_astar_manhattan(self):
         """

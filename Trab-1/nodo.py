@@ -1,7 +1,6 @@
+import imp
 from typing import List
-
-
-List
+from manhattan import calcula_distancia_manhattan
 
 class Nodo:
     """
@@ -19,12 +18,11 @@ class Nodo:
         self.pai:Nodo = pai
         self.acao = acao
         self.custo = custo
-    def retorna_caminho(self,caminho:List=None):
+        self.custo_manhattan = calcula_distancia_manhattan(estado,custo)
+
+    def retorna_caminho(self,caminho:List=[]):
         if self.pai: 
-            if caminho:
-                caminho.append(self.acao)
-            else:
-                caminho = [self.acao]            
+            caminho.append(self.acao)          
             return self.pai.retorna_caminho(caminho) 
         else: 
             caminho.reverse()

@@ -1,5 +1,4 @@
 from typing import List
-from nodo import Nodo
 from constantes import ESTADO_FINAL, POSICAO_VAZIA
 from funcoes_distancia import *
 
@@ -19,19 +18,12 @@ def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
         distancia_vertical = calcula_distancia_vertical(posicao_atual,posicao_correta)
         return distancia_horizontal+distancia_vertical
 
-def calcula_distancia_manhattan(nodo:Nodo):
+def calcula_distancia_manhattan(estado,custo=0):
     distancia_manhatan = 0
-    for pos in range(len(nodo.estado)):
-        if nodo.estado[pos] != ESTADO_FINAL[pos] and nodo.estado[pos] != POSICAO_VAZIA:
-            distancia_manhatan += calcula_distancia_posicao(nodo.estado,nodo.estado[pos])
-            
-    return distancia_manhatan
+    for pos in range(len(estado)):
+        if estado[pos] != ESTADO_FINAL[pos] and estado[pos] != POSICAO_VAZIA:
+            distancia_manhatan += calcula_distancia_posicao(estado,estado[pos])
+    return distancia_manhatan+custo
 
-def desempilha(nodos:List[Nodo]) -> Nodo:
-    minima_manhattan = {DISTANCIA:1000,NODO:None}
-    for nodo in nodos:
-        distancia_nodo = calcula_distancia_manhattan(nodo)+nodo.custo
-        if(distancia_nodo<minima_manhattan[DISTANCIA]):
-            minima_manhattan[DISTANCIA]=distancia_nodo
-            minima_manhattan[NODO]=nodo
-    return minima_manhattan[NODO]
+def desempilha(lista):
+    return lista.pop()

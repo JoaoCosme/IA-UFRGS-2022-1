@@ -2,6 +2,7 @@ from typing import List
 import manhattan
 from nodo import Nodo
 from constantes import ESTADO_FINAL
+from fila_nodo import Lista_Prio_Nodo
 
 def cria_nodo(estado, pai, acao, custo):
     return Nodo(estado, pai, acao, custo)
@@ -74,28 +75,31 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado):
+def busca_grafo(funcao_desempilha,estado,fronteira:List):
     """
     Recebe umma funcao de desempilha (um metodo) e um estado inicial, executa
     entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
     conjunto_explorados:List[str] = []
-    fronteira:List[Nodo] = [Nodo(estado,None,None,0)]
+    fronteira.append(Nodo(estado))
     falha:bool = False
+    
     while not falha:
-        if len(fronteira)==0 : 
-            falha=True
-            continue
+        if len(fronteira)==0 : return None
         estado_atual:Nodo = funcao_desempilha(fronteira)
-        fronteira.remove(estado_atual)
+        if estado_atual.custo > 25:
+            return None
+        
         if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
+        
         if estado_atual.estado not in conjunto_explorados:
             conjunto_explorados.append(estado_atual.estado)
             fronteira.extend(expande(estado_atual))
+    
     return None
 
-def expande(nodo):
+def expande(nodo) -> List[Nodo]:
     """
     Recebe um nodo (objeto da classe Nodo) e retorna um iterable de nodos.
     Cada nodo do iterable é contém um estado sucessor do nó recebido.
@@ -108,7 +112,6 @@ def expande(nodo):
     for x in nodos_expandidos:#para cada estado novo
         n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 )#cria um nodo flho
         list.append(n)#coloca os nodos filhos em uma lista de nodos iterável
-        print(vars(n))
         i= i+1
     return list
     
@@ -163,4 +166,4 @@ def astar_manhattan(estado):
     :return:
     """
     # substituir a linha abaixo pelo seu codigo
-    return busca_grafo(manhattan.desempilha,estado)
+    return busca_grafo(manhattan.desempilha,estado,Lista_Prio_Nodo())
