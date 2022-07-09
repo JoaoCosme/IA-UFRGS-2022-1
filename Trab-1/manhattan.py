@@ -1,5 +1,9 @@
+from typing import List
 from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA
 from funcoes_distancia import *
+
+DISTANCIA = "distancia"
+NODO = "nodo"
 
 def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
     posicao_correta = ESTADO_FINAL.find(numero)
@@ -22,3 +26,12 @@ def calcula_distancia_manhattan(nodo:Nodo):
             distancia_manhatan += calcula_distancia_posicao(nodo.estado,nodo.estado[pos])
             
     return distancia_manhatan
+
+def desempilha(nodos:List[Nodo]) -> Nodo:
+    minima_manhattan = {DISTANCIA:1000,NODO:None}
+    for nodo in nodos:
+        distancia_nodo = calcula_distancia_manhattan(nodo)
+        if(distancia_nodo<minima_manhattan[DISTANCIA]):
+            minima_manhattan[DISTANCIA]=distancia_nodo
+            minima_manhattan[NODO]=nodo
+    return minima_manhattan[NODO]

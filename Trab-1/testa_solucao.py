@@ -141,8 +141,12 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(2,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_vertical_e_horizontal))
         self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical))
         self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado))
-        
-
+    def testa_fronteira_astar_manhattan(self):
+        """
+        Testa se, dado uma fronteira, A* manhattan retorna o proximo nodo corretamente
+        """
+        fronteira = [solucao.Nodo("1234567_8"),solucao.Nodo("1245673_8"),solucao.Nodo("7812345_6"),]
+        self.assertEqual("1234567_8",manhattan.desempilha(fronteira).estado)
                     
 if __name__ == '__main__':
     unittest.main()
