@@ -14,7 +14,10 @@ def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
         return abs(posicao_correta-posicao_atual)
     elif na_coluna_correta(posicao_correta,posicao_atual):
         return abs(posicao_correta//3-posicao_atual//3)    
-    return 0
+    else:
+        distancia_horizontal = abs(posicao_correta%3-posicao_atual%3)
+        distancia_vertical = abs(posicao_correta//3-posicao_atual//3)
+        return distancia_horizontal+distancia_vertical
     
 
 def calcula_distancia_manhattan(nodo:Nodo):
