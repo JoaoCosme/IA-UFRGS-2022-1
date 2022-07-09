@@ -1,5 +1,6 @@
 import unittest
 import solucao as solucao
+import manhattan
 
 
 class TestaSolucao(unittest.TestCase):
@@ -114,6 +115,7 @@ class TestaSolucao(unittest.TestCase):
         """
         self.assertTrue(solucao.e_estado_final(solucao.Nodo("12345678_")))
         self.assertFalse(solucao.e_estado_final(solucao.Nodo("1235_6478")))
+        
     def test_retorna_caminho(self):
         """
         Testa se caminho é retornado corretamente
@@ -122,7 +124,14 @@ class TestaSolucao(unittest.TestCase):
         filho = solucao.Nodo("1234567_8",pai)
         neto = solucao.Nodo("12345678_",filho)
         self.assertEqual([pai,filho,neto],neto.retorna_caminho())
+    def testa_calculo_manhattan(self):
+        """
+        Testa calculos de manhattan
+        """
+        nodo_uma_peca_fora_horizontal = solucao.Nodo("1234567_8")
+        self.assertEqual(1,manhattan.calcula_distancia_manhattan(nodo_uma_peca_fora_horizontal))
         
+
                     
 if __name__ == '__main__':
     unittest.main()
