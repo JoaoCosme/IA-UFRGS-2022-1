@@ -1,15 +1,9 @@
-from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA,NUMERO_COLUNAS,NUMERO_LINHAS
+from solucao import Nodo, ESTADO_FINAL, POSICAO_VAZIA
+from funcoes_distancia import *
 
 def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
     posicao_correta = ESTADO_FINAL.find(numero)
     posicao_atual = estado_atual.find(numero)
-    
-    
-    calcula_distancia_vertical = lambda posicao_correta, posicao_atual: abs(posicao_correta//NUMERO_LINHAS-posicao_atual//NUMERO_LINHAS)
-    calcula_distancia_horizontal = lambda posicao_correta, posicao_atual:abs(posicao_correta%NUMERO_COLUNAS-posicao_atual%NUMERO_COLUNAS)
-    
-    na_coluna_correta = lambda posicao_correta,posicao_atual:calcula_distancia_horizontal(posicao_correta,posicao_atual)==0
-    na_linha_correta = lambda posicao_correta,posicao_atual:calcula_distancia_vertical(posicao_correta,posicao_atual)==0
     
     if na_linha_correta(posicao_correta,posicao_atual) :
         return calcula_distancia_horizontal(posicao_atual,posicao_correta)
