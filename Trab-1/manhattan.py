@@ -30,7 +30,7 @@ def calcula_distancia_manhattan(nodo:Nodo):
 def desempilha(nodos:List[Nodo]) -> Nodo:
     minima_manhattan = {DISTANCIA:1000,NODO:None}
     for nodo in nodos:
-        distancia_nodo = calcula_distancia_manhattan(nodo)
+        distancia_nodo = calcula_distancia_manhattan(nodo)+nodo.custo
         if(distancia_nodo<minima_manhattan[DISTANCIA]):
             minima_manhattan[DISTANCIA]=distancia_nodo
             minima_manhattan[NODO]=nodo

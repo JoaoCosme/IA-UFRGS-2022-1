@@ -125,6 +125,7 @@ class TestaSolucao(unittest.TestCase):
         filho = Nodo("1234567_8",pai,"direita")
         neto = Nodo("12345678_",filho,"baixo")
         self.assertEqual(["direita","baixo"],neto.retorna_caminho())
+    
     def testa_calculo_manhattan(self):
         """
         Testa calculos de manhattan
@@ -144,6 +145,7 @@ class TestaSolucao(unittest.TestCase):
         self.assertEqual(3,manhattan.calcula_distancia_manhattan(nodo_duas_horizontal_uma_vertical))
         self.assertEqual(8,manhattan.calcula_distancia_manhattan(nodo_baguncado))
         self.assertEqual(13,manhattan.calcula_distancia_manhattan(nodo_baguncado_2))
+    
     def testa_fronteira_astar_manhattan(self):
         """
         Testa se, dado uma fronteira, A* manhattan retorna o proximo nodo corretamente
