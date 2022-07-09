@@ -114,6 +114,15 @@ class TestaSolucao(unittest.TestCase):
         """
         self.assertTrue(solucao.e_estado_final(solucao.Nodo("12345678_")))
         self.assertFalse(solucao.e_estado_final(solucao.Nodo("1235_6478")))
-                
+    def test_retorna_caminho(self):
+        """
+        Testa se caminho é retornado corretamente
+        """
+        pai = solucao.Nodo("123456_78")
+        filho = solucao.Nodo("1234567_8",pai)
+        neto = solucao.Nodo("12345678_",filho)
+        self.assertEqual([pai,filho,neto],neto.retorna_caminho())
+        
+                    
 if __name__ == '__main__':
     unittest.main()

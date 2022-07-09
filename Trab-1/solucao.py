@@ -19,10 +19,15 @@ class Nodo:
         self.acao = acao
         self.custo = custo
     def retorna_caminho(self,caminho:List=None):
-        caminho.append(self)
+        if caminho:
+            caminho.append(self)
+        else:
+            caminho = [self]            
+        
         if self.pai: 
             return self.pai.retorna_caminho(caminho) 
         else: 
+            caminho.reverse()
             return caminho
 
 
