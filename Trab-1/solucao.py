@@ -1,11 +1,15 @@
-from typing import List
+from dataclasses import FrozenInstanceError
+from typing import List, Optional
 import manhattan
 from nodo import Nodo
 from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
 from collections import deque
 
-def cria_nodo(estado, pai, acao, custo):
+
+MAX_FRONTEIRA = 10000
+
+def cria_nodo(estado, pai=None, acao=None, custo=0):
     return Nodo(estado, pai, acao, custo)
                         
 def sucessor(estado):
@@ -76,28 +80,29 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado,fronteira:List):
+def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
     """
-    Recebe umma funcao de desempilha (um metodo) e um estado inicial, executa
-    entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
+    Recebe umma funcao de desempilha (um metodo),um estado inicial e um tipo de fronteira
+    executa entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
     conjunto_explorados:List[str] = []
-    fronteira.append(Nodo(estado))
+    fronteira.append(cria_nodo(estado))
     falha:bool = False
     
     while not falha:
-        if len(fronteira)==0 : return None
+        if len(fronteira)==0 or len(fronteira)>MAX_FRONTEIRA: return None
         estado_atual:Nodo = funcao_desempilha(fronteira)
-        if estado_atual.custo > 25:
-            return None
-        
+                
         if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
         
         if estado_atual.estado not in conjunto_explorados:
             conjunto_explorados.append(estado_atual.estado)
-            fronteira.extend(expande(estado_atual))
-    
+            
+            expandidos = expande(estado_atual)
+            a_expandir = [expandido for expandido in expandidos if expandido.estado not in conjunto_explorados]
+                
+            fronteira.extend(a_expandir)    
     return None
 
 def expande(nodo) -> List[Nodo]:
@@ -217,5 +222,5 @@ def astar_manhattan(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    return busca_grafo(manhattan.desempilha,estado,Lista_Prio_Nodo())
+    fronteira = Lista_Prio_Nodo()
+    return busca_grafo(manhattan.desempilha,estado,fronteira)
