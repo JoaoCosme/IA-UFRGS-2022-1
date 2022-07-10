@@ -3,6 +3,7 @@ import manhattan
 from nodo import Nodo
 from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
+from collections import deque
 
 def cria_nodo(estado, pai, acao, custo):
     return Nodo(estado, pai, acao, custo)
@@ -115,19 +116,70 @@ def expande(nodo) -> List[Nodo]:
         i= i+1
     return list
     
+'''Funcoes auxiliares para bfs (e dfs):
+solucionavel(estado): usa a funcao conta_inversoes(estado) para determinar se entrada tem solucao
+acha_caminho(nodo, caminho) retorna lista de nodos percorridos da entrada até a solucao encontrada
+nao_explorado(nodo, explorados) testa se o estado de um nodo ja foi atingido ou nao
+expande_fronteira(nodo, fronteira) utiliza a funcao expande(nodo) para encontrar nodos filhos e aloca-os na lista'''
 
+def solucionavel(estado):    
+    if conta_inversoes(estado) % 2 == 0:
+        return True
+    return False
+
+def conta_inversoes(estado):
+    num_inversoes = 0
+    for i in range(0,9):
+        for j in range(i+1,9):
+            if estado[j] != '_' and estado[i] != '_' and int(estado[i]) > int(estado[j]):
+                num_inversoes += 1
+    return num_inversoes
+
+def acha_caminho(nodo, caminho):
+    nodo_atual = nodo
+    while nodo_atual.pai != None:
+        caminho.append(nodo_atual)
+        nodo_atual = nodo_atual.pai
+
+def nao_explorado(nodo, explorados):
+    if explorados.get(nodo.estado) == None:
+        return True
+    return False
+
+def expande_fronteira(nodo, fronteira):
+    for n in expande(nodo):
+        fronteira.append(n)
 
 def bfs(estado):
-    """
-    Recebe um estado (string), executa a busca em LARGURA e
-    retorna uma lista de ações que leva do
-    estado recebido até o objetivo ("12345678_").
-    Caso não haja solução a partir do estado recebido, retorna None
-    :param estado: str
-    :return:
-    """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
+    caso True, executa algoritmo de busca por largura.'''
+    if solucionavel(estado):
+
+        if estado == ESTADO_FINAL:
+            return []
+        
+        solucao_encontrada = False
+        explorados = {}
+        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+        nodo_inicial = Nodo(estado, None, None, 0)
+        fronteira.append(nodo_inicial)
+    
+        while not solucao_encontrada:
+            if len(fronteira) == 0:
+                return None
+            
+            nodo_atual = fronteira.popleft()
+
+            if nodo_atual.estado == ESTADO_FINAL:
+                caminho = []
+                acha_caminho(nodo_atual, caminho)
+                return list(reversed(caminho))
+            
+            if nao_explorado(nodo_atual, explorados):
+                explorados[nodo_atual.estado] = nodo_atual
+                expande_fronteira(nodo_atual, fronteira)
+            
+    return None
 
 
 def dfs(estado):
