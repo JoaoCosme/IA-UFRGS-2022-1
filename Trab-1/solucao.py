@@ -79,10 +79,10 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado,fronteira=[]):
+def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
     """
-    Recebe umma funcao de desempilha (um metodo) e um estado inicial, executa
-    entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
+    Recebe umma funcao de desempilha (um metodo),um estado inicial e um tipo de fronteira
+    executa entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
     conjunto_explorados:List[str] = []
@@ -170,6 +170,5 @@ def astar_manhattan(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
     fronteira = Lista_Prio_Nodo()
     return busca_grafo(manhattan.desempilha,estado,fronteira)
