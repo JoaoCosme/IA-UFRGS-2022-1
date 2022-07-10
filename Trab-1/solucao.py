@@ -1,10 +1,14 @@
+from dataclasses import FrozenInstanceError
 from typing import List
 import manhattan
 from nodo import Nodo
 from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
 
-def cria_nodo(estado, pai, acao, custo):
+
+MAX_FRONTEIRA = 3000
+
+def cria_nodo(estado, pai=None, acao=None, custo=0):
     return Nodo(estado, pai, acao, custo)
                         
 def sucessor(estado):
@@ -82,21 +86,23 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List):
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
     conjunto_explorados:List[str] = []
-    fronteira.append(Nodo(estado))
+    fronteira.append(cria_nodo(estado))
     falha:bool = False
     
     while not falha:
-        if len(fronteira)==0 : return None
+        if len(fronteira)==0 or len(fronteira)>MAX_FRONTEIRA: return None
         estado_atual:Nodo = funcao_desempilha(fronteira)
-        if estado_atual.custo > 25:
-            return None
-        
+                
         if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
         
         if estado_atual.estado not in conjunto_explorados:
             conjunto_explorados.append(estado_atual.estado)
-            fronteira.extend(expande(estado_atual))
-    
+            
+            expandidos = expande(estado_atual)
+            a_expandir = [expandido for expandido in expandidos if expandido.estado not in conjunto_explorados]
+            a_expandir = [expandido for expandido in a_expandir if expandido.estado not in list(map(lambda x:x.estado,fronteira.queue))]
+                
+            fronteira.extend(a_expandir)    
     return None
 
 def expande(nodo) -> List[Nodo]:
@@ -166,4 +172,5 @@ def astar_manhattan(estado):
     :return:
     """
     # substituir a linha abaixo pelo seu codigo
-    return busca_grafo(manhattan.desempilha,estado,Lista_Prio_Nodo())
+    fronteira = Lista_Prio_Nodo()
+    return busca_grafo(manhattan.desempilha,estado,fronteira)

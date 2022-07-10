@@ -1,12 +1,13 @@
 import imp
-from typing import List
+from operator import lt
+from typing import List, Optional
 from manhattan import calcula_distancia_manhattan
 
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado:str, pai:any=None, acao:str=None, custo:int=0):
+    def __init__(self, estado:str, pai=None, acao:str=None, custo:int=0):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
@@ -19,8 +20,13 @@ class Nodo:
         self.acao = acao
         self.custo = custo
         self.custo_manhattan = calcula_distancia_manhattan(estado,custo)
+        
+        
+    def __lt__(self,other):
+        return self.custo_manhattan < other.custo_manhattan
 
-    def retorna_caminho(self,caminho:List=[]):
+    def retorna_caminho(self,caminho:Optional[List]=None):
+        caminho = caminho or []
         if self.pai: 
             caminho.append(self.acao)          
             return self.pai.retorna_caminho(caminho) 
