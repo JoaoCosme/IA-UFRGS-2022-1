@@ -189,16 +189,34 @@ def bfs(estado):
 
 
 def dfs(estado):
-    """
-    Recebe um estado (string), executa a busca em PROFUNDIDADE e
-    retorna uma lista de ações que leva do
-    estado recebido até o objetivo ("12345678_").
-    Caso não haja solução a partir do estado recebido, retorna None
-    :param estado: str
-    :return:
-    """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
+    caso True, executa algoritmo de busca por profundidade.'''
+    if solucionavel(estado):
+        if estado == ESTADO_FINAL:
+            return []
+        
+        solucao_encontrada = False
+        explorados = {}
+        #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
+        fronteira = deque() 
+        nodo_inicial = Nodo(estado, None, None, 0)
+        fronteira.append(nodo_inicial)
+    
+        while not solucao_encontrada:
+            if len(fronteira) == 0:
+                return None
+            
+            nodo_atual = fronteira.pop()
+
+            if nodo_atual.estado == ESTADO_FINAL:
+                caminho = []
+                acha_caminho(nodo_atual, caminho)
+                return list(reversed(caminho))
+            
+            if nao_explorado(nodo_atual, explorados):
+                explorados[nodo_atual.estado] = nodo_atual
+                expande_fronteira(nodo_atual, fronteira)
+    return None
 
 
 def astar_hamming(estado):
