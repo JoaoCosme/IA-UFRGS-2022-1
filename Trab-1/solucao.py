@@ -165,7 +165,8 @@ def bfs(estado):
         
         solucao_encontrada = False
         explorados = {}
-        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+        #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+        fronteira = deque() 
         nodo_inicial = Nodo(estado, None, None, 0)
         fronteira.append(nodo_inicial)
     
