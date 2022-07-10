@@ -1,12 +1,12 @@
 from dataclasses import FrozenInstanceError
-from typing import List
+from typing import List, Optional
 import manhattan
 from nodo import Nodo
 from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
 
 
-MAX_FRONTEIRA = 3000
+MAX_FRONTEIRA = 10000
 
 def cria_nodo(estado, pai=None, acao=None, custo=0):
     return Nodo(estado, pai, acao, custo)
@@ -79,7 +79,7 @@ def determina_estados(acoes_possiveis, estado, indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado,fronteira:List):
+def busca_grafo(funcao_desempilha,estado,fronteira=[]):
     """
     Recebe umma funcao de desempilha (um metodo) e um estado inicial, executa
     entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
@@ -100,7 +100,6 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List):
             
             expandidos = expande(estado_atual)
             a_expandir = [expandido for expandido in expandidos if expandido.estado not in conjunto_explorados]
-            a_expandir = [expandido for expandido in a_expandir if expandido.estado not in list(map(lambda x:x.estado,fronteira.queue))]
                 
             fronteira.extend(a_expandir)    
     return None
