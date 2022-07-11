@@ -1,15 +1,16 @@
 from dataclasses import FrozenInstanceError
 from typing import List, Optional
 import manhattan
+import hamming
 from nodo import Nodo
-from constantes import ESTADO_FINAL
+from constantes import ESTADO_FINAL, MANHATTAN, HAMMING
 from fila_nodo import Lista_Prio_Nodo
 from collections import deque
 
 MAX_FRONTEIRA = 10000
 
-def cria_nodo(estado, pai=None, acao=None, custo=0):
-    return Nodo(estado, pai, acao, custo)
+def cria_nodo(estado, pai=None, acao=None, custo=0,astar:str=None):
+    return Nodo(estado, pai, acao, custo,astar)
                         
 def sucessor(estado):
     acoes_possiveis = []
@@ -79,7 +80,7 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List=[],astar:str=None):
         return None
     
     conjunto_explorados = {}
-    fronteira.append(cria_nodo(estado))
+    fronteira.append(cria_nodo(estado,astar=astar))
     falha:bool = False
     
     while not falha:
@@ -93,12 +94,12 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List=[],astar:str=None):
         if not conjunto_explorados.get(estado_atual.estado):
             conjunto_explorados[estado_atual.estado] = estado_atual
             
-            expandidos = expande(estado_atual)
+            expandidos = expande(estado_atual,astar)
                 
             fronteira.extend(expandidos)    
     return None
 
-def expande(nodo) -> List[Nodo]:
+def expande(nodo,astar:str=None) -> List[Nodo]:
     """
     Recebe um nodo (objeto da classe Nodo) e retorna um iterable de nodos.
     Cada nodo do iterable é contém um estado sucessor do nó recebido.
@@ -109,7 +110,7 @@ def expande(nodo) -> List[Nodo]:
     list=[]
     i= 0
     for x in nodos_expandidos:#para cada estado novo
-        n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 )#cria um nodo flho
+        n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 ,astar)#cria um nodo flho
         list.append(n)#coloca os nodos filhos em uma lista de nodos iterável
         i= i+1
     return list
@@ -226,7 +227,8 @@ def astar_hamming(estado):
     :return:
     """
     # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    fronteira = Lista_Prio_Nodo()
+    return busca_grafo(hamming.desempilha,estado,fronteira, HAMMING)
 
 
 def astar_manhattan(estado):
@@ -239,4 +241,4 @@ def astar_manhattan(estado):
     :return:
     """
     fronteira = Lista_Prio_Nodo()
-    return busca_grafo(manhattan.desempilha,estado,fronteira)
+    return busca_grafo(manhattan.desempilha,estado,fronteira, MANHATTAN)

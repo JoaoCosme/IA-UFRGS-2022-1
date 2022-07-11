@@ -1,4 +1,4 @@
-from constantes import HAMMING, MANHATTAN
+from constantes import HAMMING, MANHATTAN, ESTADO_FINAL
 from operator import lt
 from typing import List, Optional
 from manhattan import calcula_distancia_manhattan
@@ -20,13 +20,13 @@ class Nodo:
         self.pai:Nodo = pai
         self.acao = acao
         self.custo = custo
-        self.custo_astar = self.calcula_distancia_escolhida(astar)
+        self.custo_astar = self.calcula_distancia_escolhida(astar)+custo
         
     def calcula_distancia_escolhida(self,astar:str):
         if astar == MANHATTAN:
             return calcula_distancia_manhattan(self.estado,self.custo)
         elif astar == HAMMING:
-            return calcula_distancia_hamming(self.estado,self.custo)
+            return calcula_distancia_hamming(self.estado,ESTADO_FINAL)
         else:
             return self.custo
         

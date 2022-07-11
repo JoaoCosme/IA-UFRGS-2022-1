@@ -23,7 +23,7 @@ def calcula_distancia_manhattan(estado,custo=0):
     for pos in range(len(estado)):
         if estado[pos] != ESTADO_FINAL[pos] and estado[pos] != POSICAO_VAZIA:
             distancia_manhatan += calcula_distancia_posicao(estado,estado[pos])
-    return distancia_manhatan+custo
+    return distancia_manhatan
 
 def desempilha(lista):
     return lista.pop()
