@@ -109,11 +109,11 @@ def expande(nodo) -> List[Nodo]:
         i= i+1
     return list
 
-def solucionavel(estado): 
-    '''Um estado de entrada do 8-puzzle é solucionavel se o numero de inversoes de posicoes e' par
+'''def solucionavel(estado): 
+    Um estado de entrada do 8-puzzle é solucionavel se o numero de inversoes de posicoes e' par
     esta funcao booleana recebe a string estado, converte os digitos nao vazios para inteiro e testa, para cada digito i, 
     quantos digitos apos i na string sao menores que i (e deverao trocar de lugar)
-    se a contagem termina com numero par, retorna True (e' solucionavel). se termina impar, retorna False (nao solucionavel)'''   
+    se a contagem termina com numero par, retorna True (e' solucionavel). se termina impar, retorna False (nao solucionavel) 
     num_inversoes = 0
     for i in range(0,9):
         for j in range(i+1,9):
@@ -121,90 +121,87 @@ def solucionavel(estado):
                 num_inversoes += 1    
     if num_inversoes % 2 == 0:
         return True
-    return False
+    return False'''
 
 def bfs(estado):
-    '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
-    caso True, executa algoritmo de busca por LARGURA e retorna lista com o caminho do estado inicial ao estado final.'''
-    if solucionavel(estado):
-        if estado == ESTADO_FINAL:
-            return []
+    '''O conjunto nodos_explorados e' implementado como um dicionario onde os indices sao as chaves estado de cada Nodo.
+    Estados iniciais sem solucao tendem a entrar em loop infinito e revisitar os mesmos estados multiplas vezes. 
+    Se um estado nunca foi visitado (retorna None no metodo get() do dicionario), ele entra no dicionario e expande a fronteira.
+    Se ja esta no dicionario, o algoritmo apenas busca o proximo elemento ja existente na fila.
+    '''
+    if estado == ESTADO_FINAL:
+        return []
         
-        encontrada = False
-        nodos_explorados = {}
-        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
-        estado_inicial = cria_nodo(estado, None, None, 0)
-        fronteira.append(estado_inicial)
+    encontrada = False
+    nodos_explorados = {}
+    fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+    estado_inicial = cria_nodo(estado, None, None, 0)
+    fronteira.append(estado_inicial)
 
-        #contador para testes de desempenho
-        #conta_explorados = 0 
+    #contador para testes de desempenho
+    #conta_explorados = 0 
     
-        while not encontrada:
-            if len(fronteira) == 0:
-                return None
+    while not encontrada:
+        if len(fronteira) == 0:
+            return None
             
-            estado_atual = fronteira.popleft()
+        estado_atual = fronteira.popleft()
 
-            if estado_atual.estado == ESTADO_FINAL:
-                caminho = []
+        if estado_atual.estado == ESTADO_FINAL:
+            caminho = []
 
-                #print("total nodos explorados: ", conta_explorados)
+            #print("total nodos explorados: ", conta_explorados)
 
-                while estado_atual.pai != None:
-                    caminho.append(estado_atual)
-                    estado_atual = estado_atual.pai
-                return list(reversed(caminho))
+            while estado_atual.pai != None:
+                caminho.append(estado_atual)
+                estado_atual = estado_atual.pai
+            return list(reversed(caminho))
             
-            if nodos_explorados.get(estado_atual.estado) == None:
-                nodos_explorados[estado_atual.estado] = estado_atual
+        if nodos_explorados.get(estado_atual.estado) == None:
+            nodos_explorados[estado_atual.estado] = estado_atual
 
-                #conta_explorados += 1
+            #conta_explorados += 1
 
-                for nodo in expande(estado_atual):
-                    fronteira.append(nodo)         
-    return None
+            for nodo in expande(estado_atual):
+                fronteira.append(nodo)  
 
 def dfs(estado):
-    '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
-    caso True, executa algoritmo de busca por PROFUNDIDADE e retorna lista com o caminho do estado inicial ao estado final.
-    nao encontra solucao otima.'''
-    if solucionavel(estado):
-        if estado == ESTADO_FINAL:
-            return []
+    '''nao fornece solucao otima. diferenca entre bfs e dfs e' a estrutura de dados utilizada (no caso da dfs e' pilha).'''
+    if estado == ESTADO_FINAL:
+        return []
         
-        encontrada = False
-        nodos_explorados = {}
-        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
-        estado_inicial = cria_nodo(estado, None, None, 0)
-        fronteira.append(estado_inicial)
+    encontrada = False
+    nodos_explorados = {}
+    fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
+    estado_inicial = cria_nodo(estado, None, None, 0)
+    fronteira.append(estado_inicial)
 
-        #contador para testes de desempenho
-        #conta_explorados = 0 
+    #contador para testes de desempenho
+    #conta_explorados = 0 
     
-        while not encontrada:
-            if len(fronteira) == 0:
-                return None
+    while not encontrada:
+        if len(fronteira) == 0:
+            return None
             
-            estado_atual = fronteira.pop()
+        estado_atual = fronteira.pop()
 
-            if estado_atual.estado == ESTADO_FINAL:
-                caminho = []
+        if estado_atual.estado == ESTADO_FINAL:
+            caminho = []
 
-                #print("total nodos explorados: ", conta_explorados)
+            #print("total nodos explorados: ", conta_explorados)
 
-                while estado_atual.pai != None:
-                    caminho.append(estado_atual)
-                    estado_atual = estado_atual.pai
-                return list(reversed(caminho))
+            while estado_atual.pai != None:
+                caminho.append(estado_atual)
+                estado_atual = estado_atual.pai
+            return list(reversed(caminho))
             
-            if nodos_explorados.get(estado_atual.estado) == None:
-                nodos_explorados[estado_atual.estado] = estado_atual
+        if nodos_explorados.get(estado_atual.estado) == None:
+            nodos_explorados[estado_atual.estado] = estado_atual
 
-                #conta_explorados += 1
+            #conta_explorados += 1
 
-                for nodo in expande(estado_atual):
-                    fronteira.append(nodo)    
-    return None
+            for nodo in expande(estado_atual):
+                fronteira.append(nodo)  
 
 def astar_hamming(estado):
     """
