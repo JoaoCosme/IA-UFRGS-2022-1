@@ -20,3 +20,9 @@ total custo:  101601
 total nodos explorados:  154161
 
 tempo total de execucao:  1.3857574462890625 segundos
+
+
+
+## REFERÊNCIAS:
+
+A função booleana solucionavel(estado) foi implementada com base nas informações retiradas da seção *Detecting Unsolvable Boards* sobre o Slider Puzzle no link https://www.cs.princeton.edu/courses/archive/spring21/cos226/assignments/8puzzle/specification.php
