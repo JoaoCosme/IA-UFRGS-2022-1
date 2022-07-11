@@ -14,6 +14,7 @@ def cria_nodo(estado, pai=None, acao=None, custo=0):
                         
 def sucessor(estado):
     acoes_possiveis = []
+    sucessores = []
     indice = estado.find('_')
     if pode_mover_abaixo(indice):
         acoes_possiveis.append("abaixo")
@@ -23,14 +24,17 @@ def sucessor(estado):
         acoes_possiveis.append("direita")
     if pode_mover_esquerda(indice):
         acoes_possiveis.append("esquerda")
-    return determina_estados(acoes_possiveis, estado, indice)
+    for acao in acoes_possiveis:
+        if acao == "direita":
+            sucessores.append((acao, novo_estado(estado, indice, indice+1)))
+        elif acao == "esquerda":
+            sucessores.append((acao, novo_estado(estado, indice, indice-1)))
+        elif acao == "acima":
+            sucessores.append((acao, novo_estado(estado, indice, indice-3)))
+        elif acao == "abaixo":
+            sucessores.append((acao, novo_estado(estado, indice, indice+3)))
+    return sucessores
     
-'''Funções auxiliares da função sucessor:
-ação direita: swap [i] com [i+1] || pode ir para direita se índice != 2, != 5 != 8
-ação esquerda: swap [i] com [i-1] || pode ir para esquerda se índice != 0, != 3, != 6
-ação cima: swap [i] com [i-3] || pode mover para cima quando índice > 2
-ação baixo: swap[i] com [i+3] || pode mover para baixo quando índice < 6
-'''
 #funções que encontram movimentos possíveis:
 def pode_mover_direita(indice):
     if indice not in (2,5,8):
@@ -61,21 +65,6 @@ def novo_estado(estado, indice, novo_indice):
     prox_estado = list(estado)
     prox_estado[indice], prox_estado[novo_indice] = prox_estado[novo_indice], prox_estado[indice]
     return ''.join(prox_estado)
-
-#cria tuplas de sucessores
-def determina_estados(acoes_possiveis, estado, indice):
-    sucessores = []
-    for acao in acoes_possiveis:
-        if acao == "direita":
-            sucessores.append((acao, novo_estado(estado, indice, indice+1)))
-        elif acao == "esquerda":
-            sucessores.append((acao, novo_estado(estado, indice, indice-1)))
-        elif acao == "acima":
-            sucessores.append((acao, novo_estado(estado, indice, indice-3)))
-        elif acao == "abaixo":
-            sucessores.append((acao, novo_estado(estado, indice, indice+3)))
-    return sucessores
-
 
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
@@ -120,104 +109,80 @@ def expande(nodo) -> List[Nodo]:
         list.append(n)#coloca os nodos filhos em uma lista de nodos iterável
         i= i+1
     return list
-    
-'''Funcoes auxiliares para bfs (e dfs):
-solucionavel(estado): usa a funcao conta_inversoes(estado) para determinar se entrada tem solucao
-acha_caminho(nodo, caminho) retorna lista de nodos percorridos da entrada até a solucao encontrada
-nao_explorado(nodo, explorados) testa se o estado de um nodo ja foi atingido ou nao
-expande_fronteira(nodo, fronteira) utiliza a funcao expande(nodo) para encontrar nodos filhos e aloca-os na lista'''
 
 def solucionavel(estado):    
-    if conta_inversoes(estado) % 2 == 0:
-        return True
-    return False
-
-def conta_inversoes(estado):
     num_inversoes = 0
     for i in range(0,9):
         for j in range(i+1,9):
             if estado[j] != '_' and estado[i] != '_' and int(estado[i]) > int(estado[j]):
-                num_inversoes += 1
-    return num_inversoes
-
-def acha_caminho(nodo, caminho):
-    nodo_atual = nodo
-    while nodo_atual.pai != None:
-        caminho.append(nodo_atual)
-        nodo_atual = nodo_atual.pai
-
-def nao_explorado(nodo, explorados):
-    if explorados.get(nodo.estado) == None:
+                num_inversoes += 1    
+    if num_inversoes % 2 == 0:
         return True
     return False
 
-def expande_fronteira(nodo, fronteira):
-    for n in expande(nodo):
-        fronteira.append(n)
-
 def bfs(estado):
     '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
-    caso True, executa algoritmo de busca por largura.'''
+    caso True, executa algoritmo de busca por LARGURA e retorna lista com o caminho do estado inicial ao estado final.'''
     if solucionavel(estado):
-
         if estado == ESTADO_FINAL:
             return []
         
-        solucao_encontrada = False
-        explorados = {}
-        #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
-        fronteira = deque() 
-        nodo_inicial = Nodo(estado, None, None, 0)
-        fronteira.append(nodo_inicial)
+        encontrada = False
+        nodos_explorados = {}
+        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+        estado_inicial = cria_nodo(estado, None, None, 0)
+        fronteira.append(estado_inicial)
     
-        while not solucao_encontrada:
+        while not encontrada:
             if len(fronteira) == 0:
                 return None
             
-            nodo_atual = fronteira.popleft()
+            estado_atual = fronteira.popleft()
 
-            if nodo_atual.estado == ESTADO_FINAL:
+            if estado_atual.estado == ESTADO_FINAL:
                 caminho = []
-                acha_caminho(nodo_atual, caminho)
-                return list(reversed(caminho))
+                while estado_atual.pai != None:
+                    caminho.append(estado_atual)
+                    estado_atual = estado_atual.pai
+                return reversed(caminho)
             
-            if nao_explorado(nodo_atual, explorados):
-                explorados[nodo_atual.estado] = nodo_atual
-                expande_fronteira(nodo_atual, fronteira)
-            
+            if nodos_explorados.get(estado_atual.estado) == None:
+                nodos_explorados[estado_atual.estado] = estado_atual
+                for nodo in expande(estado_atual):
+                    fronteira.append(nodo)         
     return None
-
 
 def dfs(estado):
     '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
-    caso True, executa algoritmo de busca por profundidade.'''
+    caso True, executa algoritmo de busca por PROFUNDIDADE e retorna lista com o caminho do estado inicial ao estado final.'''
     if solucionavel(estado):
         if estado == ESTADO_FINAL:
             return []
         
-        solucao_encontrada = False
-        explorados = {}
-        #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
-        fronteira = deque() 
-        nodo_inicial = Nodo(estado, None, None, 0)
-        fronteira.append(nodo_inicial)
+        encontrada = False
+        nodos_explorados = {}
+        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
+        estado_inicial = cria_nodo(estado, None, None, 0)
+        fronteira.append(estado_inicial)
     
-        while not solucao_encontrada:
+        while not encontrada:
             if len(fronteira) == 0:
                 return None
             
-            nodo_atual = fronteira.pop()
+            estado_atual = fronteira.pop()
 
-            if nodo_atual.estado == ESTADO_FINAL:
+            if estado_atual.estado == ESTADO_FINAL:
                 caminho = []
-                acha_caminho(nodo_atual, caminho)
-                return list(reversed(caminho))
+                while estado_atual.pai != None:
+                    caminho.append(estado_atual)
+                    estado_atual = estado_atual.pai
+                return reversed(caminho)
             
-            if nao_explorado(nodo_atual, explorados):
-                explorados[nodo_atual.estado] = nodo_atual
-                expande_fronteira(nodo_atual, fronteira)
+            if nodos_explorados.get(estado_atual.estado) == None:
+                nodos_explorados[estado_atual.estado] = estado_atual
+                for nodo in expande(estado_atual):
+                    fronteira.append(nodo)    
     return None
-
 
 def astar_hamming(estado):
     """
