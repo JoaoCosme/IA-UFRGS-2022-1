@@ -78,23 +78,24 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
     if not solucionavel(estado):
         return None
     
-    conjunto_explorados:List[str] = []
+    conjunto_explorados = {}
     fronteira.append(cria_nodo(estado))
     falha:bool = False
     
     while not falha:
-        if len(fronteira)==0 or len(fronteira)>MAX_FRONTEIRA: return None
+        if len(fronteira)==0: return None
+        
         estado_atual:Nodo = funcao_desempilha(fronteira)
                 
-        if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
+        if e_estado_final(estado_atual): 
+            return estado_atual.retorna_caminho()
         
-        if estado_atual.estado not in conjunto_explorados:
-            conjunto_explorados.append(estado_atual.estado)
+        if not conjunto_explorados.get(estado_atual.estado):
+            conjunto_explorados[estado_atual.estado] = estado_atual
             
             expandidos = expande(estado_atual)
-            a_expandir = [expandido for expandido in expandidos if expandido.estado not in conjunto_explorados]
                 
-            fronteira.extend(a_expandir)    
+            fronteira.extend(expandidos)    
     return None
 
 def expande(nodo) -> List[Nodo]:
@@ -130,43 +131,48 @@ def solucionavel(estado):
 def bfs(estado):
     '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
     caso True, executa algoritmo de busca por LARGURA e retorna lista com o caminho do estado inicial ao estado final.'''
-    if solucionavel(estado):
-        if estado == ESTADO_FINAL:
-            return []
-        
-        encontrada = False
-        nodos_explorados = {}
-        fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
-        estado_inicial = cria_nodo(estado, None, None, 0)
-        fronteira.append(estado_inicial)
-
-        #contador para testes de desempenho
-        #conta_explorados = 0 
     
-        while not encontrada:
-            if len(fronteira) == 0:
-                return None
+    funcao = lambda deque:deque.popleft()
+    pilha = deque()
+    return busca_grafo(funcao,estado,pilha)
+    
+    # if solucionavel(estado):
+    #     if estado == ESTADO_FINAL:
+    #         return []
+        
+    #     encontrada = False
+    #     nodos_explorados = {}
+    #     fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
+    #     estado_inicial = cria_nodo(estado, None, None, 0)
+    #     fronteira.append(estado_inicial)
+
+    #     #contador para testes de desempenho
+    #     #conta_explorados = 0 
+    
+    #     while not encontrada:
+    #         if len(fronteira) == 0:
+    #             return None
             
-            estado_atual = fronteira.popleft()
+    #         estado_atual = fronteira.popleft()
 
-            if estado_atual.estado == ESTADO_FINAL:
-                caminho = []
+    #         if estado_atual.estado == ESTADO_FINAL:
+    #             caminho = []
 
-                #print("total nodos explorados: ", conta_explorados)
+    #             #print("total nodos explorados: ", conta_explorados)
 
-                while estado_atual.pai != None:
-                    caminho.append(estado_atual)
-                    estado_atual = estado_atual.pai
-                return list(reversed(caminho))
+    #             while estado_atual.pai != None:
+    #                 caminho.append(estado_atual)
+    #                 estado_atual = estado_atual.pai
+    #             return list(reversed(caminho))
             
-            if nodos_explorados.get(estado_atual.estado) == None:
-                nodos_explorados[estado_atual.estado] = estado_atual
+    #         if nodos_explorados.get(estado_atual.estado) == None:
+    #             nodos_explorados[estado_atual.estado] = estado_atual
 
-                #conta_explorados += 1
+    #             #conta_explorados += 1
 
-                for nodo in expande(estado_atual):
-                    fronteira.append(nodo)         
-    return None
+    #             for nodo in expande(estado_atual):
+    #                 fronteira.append(nodo)         
+    # return None
 
 def dfs(estado):
     '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
