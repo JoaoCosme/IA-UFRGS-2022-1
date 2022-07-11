@@ -144,7 +144,7 @@ def bfs(estado):
                 while estado_atual.pai != None:
                     caminho.append(estado_atual)
                     estado_atual = estado_atual.pai
-                return reversed(caminho)
+                return list(reversed(caminho))
             
             if nodos_explorados.get(estado_atual.estado) == None:
                 nodos_explorados[estado_atual.estado] = estado_atual
@@ -176,7 +176,7 @@ def dfs(estado):
                 while estado_atual.pai != None:
                     caminho.append(estado_atual)
                     estado_atual = estado_atual.pai
-                return reversed(caminho)
+                return list(reversed(caminho))
             
             if nodos_explorados.get(estado_atual.estado) == None:
                 nodos_explorados[estado_atual.estado] = estado_atual
