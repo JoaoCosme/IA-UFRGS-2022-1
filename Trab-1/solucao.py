@@ -74,6 +74,10 @@ def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
     executa entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
+    
+    if not solucionavel(estado):
+        return None
+    
     conjunto_explorados:List[str] = []
     fronteira.append(cria_nodo(estado))
     falha:bool = False
