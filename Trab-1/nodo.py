@@ -1,13 +1,14 @@
-import imp
+from constantes import HAMMING, MANHATTAN
 from operator import lt
 from typing import List, Optional
 from manhattan import calcula_distancia_manhattan
+from hamming import calcula_distancia_hamming
 
 class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado:str, pai=None, acao:str=None, custo:int=0):
+    def __init__(self, estado:str, pai=None, acao:str=None, custo:int=0, astar:str=None):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
@@ -19,11 +20,18 @@ class Nodo:
         self.pai:Nodo = pai
         self.acao = acao
         self.custo = custo
-        self.custo_manhattan = calcula_distancia_manhattan(estado,custo)
+        self.custo_astar = self.calcula_distancia_escolhida(astar)
         
+    def calcula_distancia_escolhida(self,astar:str):
+        if astar == MANHATTAN:
+            return calcula_distancia_manhattan(self.estado,self.custo)
+        elif astar == HAMMING:
+            return calcula_distancia_hamming(self.estado,self.custo)
+        else:
+            return self.custo
         
     def __lt__(self,other):
-        return self.custo_manhattan < other.custo_manhattan
+        return self.custo_astar < other.custo_astar
 
     def retorna_caminho(self,caminho:Optional[List]=None):
         caminho = caminho or []

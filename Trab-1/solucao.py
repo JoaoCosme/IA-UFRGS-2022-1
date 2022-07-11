@@ -68,7 +68,7 @@ def novo_estado(estado, indice, novo_indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
+def busca_grafo(funcao_desempilha,estado,fronteira:List=[],astar:str=None):
     """
     Recebe umma funcao de desempilha (um metodo),um estado inicial e um tipo de fronteira
     executa entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
