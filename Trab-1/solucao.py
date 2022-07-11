@@ -6,7 +6,6 @@ from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
 from collections import deque
 
-
 MAX_FRONTEIRA = 10000
 
 def cria_nodo(estado, pai=None, acao=None, custo=0):
@@ -110,7 +109,11 @@ def expande(nodo) -> List[Nodo]:
         i= i+1
     return list
 
-def solucionavel(estado):    
+def solucionavel(estado): 
+    '''Um estado de entrada do 8-puzzle é solucionavel se o numero de inversoes de posicoes e' par
+    esta funcao booleana recebe a string estado, converte os digitos nao vazios para inteiro e testa, para cada digito i, 
+    quantos digitos apos i na string sao menores que i (e deverao trocar de lugar)
+    se a contagem termina com numero par, retorna True (e' solucionavel). se termina impar, retorna False (nao solucionavel)'''   
     num_inversoes = 0
     for i in range(0,9):
         for j in range(i+1,9):
@@ -132,6 +135,9 @@ def bfs(estado):
         fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
         estado_inicial = cria_nodo(estado, None, None, 0)
         fronteira.append(estado_inicial)
+
+        #contador para testes de desempenho
+        #conta_explorados = 0 
     
         while not encontrada:
             if len(fronteira) == 0:
@@ -141,6 +147,9 @@ def bfs(estado):
 
             if estado_atual.estado == ESTADO_FINAL:
                 caminho = []
+
+                #print("total nodos explorados: ", conta_explorados)
+
                 while estado_atual.pai != None:
                     caminho.append(estado_atual)
                     estado_atual = estado_atual.pai
@@ -148,13 +157,17 @@ def bfs(estado):
             
             if nodos_explorados.get(estado_atual.estado) == None:
                 nodos_explorados[estado_atual.estado] = estado_atual
+
+                #conta_explorados += 1
+
                 for nodo in expande(estado_atual):
                     fronteira.append(nodo)         
     return None
 
 def dfs(estado):
     '''primeiramente, testa se o estado de entrada é solucionavel. caso False, imediatamente retorna None.
-    caso True, executa algoritmo de busca por PROFUNDIDADE e retorna lista com o caminho do estado inicial ao estado final.'''
+    caso True, executa algoritmo de busca por PROFUNDIDADE e retorna lista com o caminho do estado inicial ao estado final.
+    nao encontra solucao otima.'''
     if solucionavel(estado):
         if estado == ESTADO_FINAL:
             return []
@@ -164,6 +177,9 @@ def dfs(estado):
         fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
         estado_inicial = cria_nodo(estado, None, None, 0)
         fronteira.append(estado_inicial)
+
+        #contador para testes de desempenho
+        #conta_explorados = 0 
     
         while not encontrada:
             if len(fronteira) == 0:
@@ -173,6 +189,9 @@ def dfs(estado):
 
             if estado_atual.estado == ESTADO_FINAL:
                 caminho = []
+
+                #print("total nodos explorados: ", conta_explorados)
+
                 while estado_atual.pai != None:
                     caminho.append(estado_atual)
                     estado_atual = estado_atual.pai
@@ -180,6 +199,9 @@ def dfs(estado):
             
             if nodos_explorados.get(estado_atual.estado) == None:
                 nodos_explorados[estado_atual.estado] = estado_atual
+
+                #conta_explorados += 1
+
                 for nodo in expande(estado_atual):
                     fronteira.append(nodo)    
     return None
