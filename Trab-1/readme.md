@@ -4,6 +4,8 @@ Alice Santin Varella - 00259915
 
 Joao Pedro Cosme da Silva --00314792
 
+Eduardo André Leite - 00287684
+
 # Detalhes de Implementação
 
 A classe Nodo foi separada em um arquivo `nodo.py` a fim de que pudesse ser usada para tipar parametros e variaveis em diversos arquivos sem causa refêrencia circular quando estes fossem usados em `solucao.py`
