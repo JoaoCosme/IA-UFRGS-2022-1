@@ -33,11 +33,10 @@ class Nodo:
     def __lt__(self,other):
         return self.custo_astar < other.custo_astar
 
-    def retorna_caminho(self,caminho:Optional[List]=None):
-        caminho = caminho or []
-        if self.pai: 
-            caminho.append(self.acao)          
-            return self.pai.retorna_caminho(caminho) 
-        else: 
-            caminho.reverse()
-            return caminho
+    def retorna_caminho(self):
+        estado_atual = self
+        caminho = []
+        while estado_atual.pai != None:
+                caminho.append(estado_atual)
+                estado_atual = estado_atual.pai
+        return list(reversed(caminho))
