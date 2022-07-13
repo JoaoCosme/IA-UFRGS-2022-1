@@ -30,7 +30,7 @@ class Nodo:
         else:
             return self.custo
         
-    def __lt__(self,other):
+    def __lt__(self,other):        
         return self.custo_astar < other.custo_astar
 
     def retorna_caminho(self):

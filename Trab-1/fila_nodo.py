@@ -1,10 +1,13 @@
 from heapq import heapify, heappop, heappush
-import queue
-from typing import Dict, List
+from typing import  List
 from nodo import Nodo
 
 
 class Lista_Prio_Nodo(object):
+    """
+    Classe que implementa uma queue com min heap para que possa ser utilizada nas
+    pesquisas A* para aumento de eficiencia
+    """    
     def __init__(self):
         self.queue = []
         heapify(self.queue)

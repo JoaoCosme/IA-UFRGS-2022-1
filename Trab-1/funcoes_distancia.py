@@ -1,5 +1,9 @@
 from constantes import NUMERO_COLUNAS,NUMERO_LINHAS
 
+"""
+Funcoes relacionadas ao calculo de distancia no 8-puzzle
+"""
+
 def calcula_distancia_vertical(posicao_correta, posicao_atual): 
     return abs(posicao_correta//NUMERO_LINHAS-posicao_atual//NUMERO_LINHAS)
 def calcula_distancia_horizontal(posicao_correta, posicao_atual):

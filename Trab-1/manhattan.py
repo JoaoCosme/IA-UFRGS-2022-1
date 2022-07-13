@@ -5,6 +5,11 @@ from funcoes_distancia import *
 DISTANCIA = "distancia"
 NODO = "nodo"
 
+
+"""
+Conjunto de funções auxiliares para o calculo de A* Manhattan
+"""
+
 def calcula_distancia_posicao(estado_atual:str,numero:str)->int:
     posicao_correta = ESTADO_FINAL.find(numero)
     posicao_atual = estado_atual.find(numero)
