@@ -37,6 +37,6 @@ class Nodo:
         estado_atual = self
         caminho = []
         while estado_atual.pai != None:
-                caminho.append(estado_atual)
+                caminho.append(estado_atual.acao)
                 estado_atual = estado_atual.pai
         return list(reversed(caminho))
