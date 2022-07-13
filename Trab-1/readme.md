@@ -29,8 +29,15 @@ tempo total de execucao:  1.3857574462890625 segundos
 
 ## BUSCA A* - DISTANCIA MANHATTAN
 
+BUSCA A* - DISTANCIA MANHATTAN
+custo:  23
+tempo total de execucao:  0.039365291595458984 segundos
 
+## BUSCA A* - HAMMING
 
+BUSCA A* - DISTANCIA HAMMING
+custo:  23
+tempo total de execucao:  0.1905989646911621 segundos
 
 ## REFERÊNCIAS:
 

@@ -142,41 +142,6 @@ def bfs(estado):
 
 def dfs(estado):
     '''nao fornece solucao otima. diferenca entre bfs e dfs e' a estrutura de dados utilizada (no caso da dfs e' pilha).'''
-    if estado == ESTADO_FINAL:
-        return []
-        
-    encontrada = False
-    nodos_explorados = {}
-    fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
-    estado_inicial = cria_nodo(estado, None, None, 0)
-    fronteira.append(estado_inicial)
-
-    #contador para testes de desempenho
-    #conta_explorados = 0 
-    
-    while not encontrada:
-        if len(fronteira) == 0:
-            return None
-            
-        estado_atual = fronteira.pop()
-
-        if estado_atual.estado == ESTADO_FINAL:
-            caminho = []
-
-            #print("total nodos explorados: ", conta_explorados)
-
-            while estado_atual.pai != None:
-                caminho.append(estado_atual)
-                estado_atual = estado_atual.pai
-            return list(reversed(caminho))
-            
-        if nodos_explorados.get(estado_atual.estado) == None:
-            nodos_explorados[estado_atual.estado] = estado_atual
-
-            #conta_explorados += 1
-
-            for nodo in expande(estado_atual):
-                fronteira.append(nodo)  
     funcao = lambda deque:deque.pop()
     pilha = deque()
     return busca_grafo(funcao,estado,pilha)
