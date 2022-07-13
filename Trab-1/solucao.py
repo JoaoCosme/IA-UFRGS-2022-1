@@ -1,6 +1,7 @@
 from dataclasses import FrozenInstanceError
 from typing import List, Optional
 import manhattan
+import hamming
 from nodo import Nodo
 from constantes import ESTADO_FINAL
 from fila_nodo import Lista_Prio_Nodo
