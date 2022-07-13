@@ -17,7 +17,7 @@ total custo:  23
 
 total nodos explorados:  100788
 
-tempo total de execucao:  0.929417610168457 segundos
+tempo total de execucao:  0.8764970302581787 segundos
 
 ## BUSCA POR PROFUNDIDADE - DFS
 
@@ -25,8 +25,7 @@ total custo:  101601
 
 total nodos explorados:  154161
 
-tempo total de execucao:  1.3857574462890625 segundos
-
+tempo total de execucao:  1.3649237155914307 segundos
 ## BUSCA A* - DISTANCIA MANHATTAN
 
 BUSCA A* - DISTANCIA MANHATTAN
