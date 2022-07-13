@@ -5,6 +5,7 @@ import solucao as solucao
 from nodo import Nodo
 from fila_nodo import Lista_Prio_Nodo
 import manhattan
+import hamming
 
 
 class TestaSolucao(unittest.TestCase):

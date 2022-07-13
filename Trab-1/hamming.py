@@ -9,7 +9,7 @@ def calcula_distancia_hamming(estado_atual:str,estado_final:str)->int: #dados 2 
         return None
     else:
         while i < TAMANHO_ESTADO: #enquanto variável de controle for menor que tamanho das strings de estado...
-            if estado_atual[i] != estado_final[i]: #compara os números na mesma posição dos estados
+            if estado_atual[i] != ESTADO_FINAL[i]: #compara os números na mesma posição dos estados
                 custo = custo + 1
             i = i + 1
         return custo #retorna o valor da distancia de Hamming
