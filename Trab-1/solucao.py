@@ -213,8 +213,8 @@ def astar_hamming(estado):
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    fronteira = Lista_Prio_Nodo()
+    return busca_grafo(hamming.desempilha,estado,fronteira)
 
 
 def astar_manhattan(estado):
