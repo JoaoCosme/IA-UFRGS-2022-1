@@ -95,8 +95,8 @@ class TestaSolucao(unittest.TestCase):
         """
         estado = "1235_6478"
         solucao_otima = ['esquerda', 'abaixo', 'direita', 'direita']
-        # self.assertEqual(solucao_otima, solucao.bfs(estado))
-        # self.assertEqual(solucao_otima, solucao.astar_hamming(estado))
+        self.assertEqual(solucao_otima, solucao.bfs(estado))
+        self.assertEqual(solucao_otima, solucao.astar_hamming(estado))
         self.assertEqual(solucao_otima, solucao.astar_manhattan(estado))
         
     def test_node_init(self):

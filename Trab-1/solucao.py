@@ -3,14 +3,14 @@ from typing import List, Optional
 import manhattan
 import hamming
 from nodo import Nodo
-from constantes import ESTADO_FINAL
+from constantes import ESTADO_FINAL, MANHATTAN, HAMMING
 from fila_nodo import Lista_Prio_Nodo
 from collections import deque
 
 MAX_FRONTEIRA = 10000
 
-def cria_nodo(estado, pai=None, acao=None, custo=0):
-    return Nodo(estado, pai, acao, custo)
+def cria_nodo(estado, pai=None, acao=None, custo=0,astar:str=None):
+    return Nodo(estado, pai, acao, custo,astar)
                         
 def sucessor(estado):
     acoes_possiveis = []
@@ -69,32 +69,34 @@ def novo_estado(estado, indice, novo_indice):
 def e_estado_final(nodo:Nodo) -> bool:
     return nodo.estado == ESTADO_FINAL
 
-def busca_grafo(funcao_desempilha,estado,fronteira:List=[]):
+def busca_grafo(funcao_desempilha,estado,fronteira:List=[],astar:str=None):
     """
     Recebe umma funcao de desempilha (um metodo),um estado inicial e um tipo de fronteira
     executa entao o algoritmo padrao de busca usando essa funcao de desempilha na fronteira
     Retorna uma Lista com os passos dados para a solucao, ou None no caso de falha
     """
-    conjunto_explorados:List[str] = []
-    fronteira.append(cria_nodo(estado))
+    
+    conjunto_explorados = {}
+    fronteira.append(cria_nodo(estado,astar=astar))
     falha:bool = False
     
     while not falha:
-        if len(fronteira)==0 or len(fronteira)>MAX_FRONTEIRA: return None
+        if len(fronteira)==0: return None
+        
         estado_atual:Nodo = funcao_desempilha(fronteira)
                 
-        if e_estado_final(estado_atual): return estado_atual.retorna_caminho()
+        if e_estado_final(estado_atual): 
+            return estado_atual.retorna_caminho()
         
-        if estado_atual.estado not in conjunto_explorados:
-            conjunto_explorados.append(estado_atual.estado)
+        if not conjunto_explorados.get(estado_atual.estado):
+            conjunto_explorados[estado_atual.estado] = estado_atual
             
-            expandidos = expande(estado_atual)
-            a_expandir = [expandido for expandido in expandidos if expandido.estado not in conjunto_explorados]
+            expandidos = expande(estado_atual,astar)
                 
-            fronteira.extend(a_expandir)    
+            fronteira.extend(expandidos)    
     return None
 
-def expande(nodo) -> List[Nodo]:
+def expande(nodo,astar:str=None) -> List[Nodo]:
     """
     Recebe um nodo (objeto da classe Nodo) e retorna um iterable de nodos.
     Cada nodo do iterable é contém um estado sucessor do nó recebido.
@@ -105,24 +107,26 @@ def expande(nodo) -> List[Nodo]:
     list=[]
     i= 0
     for x in nodos_expandidos:#para cada estado novo
-        n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 )#cria um nodo flho
+        n= cria_nodo((nodos_expandidos[i][1]), nodo, nodos_expandidos[i][0], nodo.custo+1 ,astar)#cria um nodo flho
         list.append(n)#coloca os nodos filhos em uma lista de nodos iterável
         i= i+1
     return list
 
-'''def solucionavel(estado): 
-    Um estado de entrada do 8-puzzle é solucionavel se o numero de inversoes de posicoes e' par
-    esta funcao booleana recebe a string estado, converte os digitos nao vazios para inteiro e testa, para cada digito i, 
-    quantos digitos apos i na string sao menores que i (e deverao trocar de lugar)
-    se a contagem termina com numero par, retorna True (e' solucionavel). se termina impar, retorna False (nao solucionavel) 
-    num_inversoes = 0
-    for i in range(0,9):
-        for j in range(i+1,9):
-            if estado[j] != '_' and estado[i] != '_' and int(estado[i]) > int(estado[j]):
-                num_inversoes += 1    
-    if num_inversoes % 2 == 0:
-        return True
-    return False'''
+
+# def solucionavel(estado): 
+#     Um estado de entrada do 8-puzzle é solucionavel se o numero de inversoes de posicoes e' par
+#     esta funcao booleana recebe a string estado, converte os digitos nao vazios para inteiro e testa, para cada digito i, 
+#     quantos digitos apos i na string sao menores que i (e deverao trocar de lugar)
+#     se a contagem termina com numero par, retorna True (e' solucionavel). se termina impar, retorna False (nao solucionavel) 
+#     num_inversoes = 0
+#     for i in range(0,9):
+#         for j in range(i+1,9):
+#             if estado[j] != '_' and estado[i] != '_' and int(estado[i]) > int(estado[j]):
+#                 num_inversoes += 1    
+#     if num_inversoes % 2 == 0:
+#         return True
+#     return False
+
 
 def bfs(estado):
     '''O conjunto nodos_explorados e' implementado como um dicionario onde os indices sao as chaves estado de cada Nodo.
@@ -130,79 +134,18 @@ def bfs(estado):
     Se um estado nunca foi visitado (retorna None no metodo get() do dicionario), ele entra no dicionario e expande a fronteira.
     Se ja esta no dicionario, o algoritmo apenas busca o proximo elemento ja existente na fila.
     '''
-    if estado == ESTADO_FINAL:
-        return []
-        
-    encontrada = False
-    nodos_explorados = {}
-    fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método popleft() para Fila
-    estado_inicial = cria_nodo(estado, None, None, 0)
-    fronteira.append(estado_inicial)
-
-    #contador para testes de desempenho
-    #conta_explorados = 0 
     
-    while not encontrada:
-        if len(fronteira) == 0:
-            return None
-            
-        estado_atual = fronteira.popleft()
+    funcao = lambda deque:deque.popleft()
+    pilha = deque()
+    return busca_grafo(funcao,estado,pilha)
 
-        if estado_atual.estado == ESTADO_FINAL:
-            caminho = []
-
-            #print("total nodos explorados: ", conta_explorados)
-
-            while estado_atual.pai != None:
-                caminho.append(estado_atual)
-                estado_atual = estado_atual.pai
-            return list(reversed(caminho))
-            
-        if nodos_explorados.get(estado_atual.estado) == None:
-            nodos_explorados[estado_atual.estado] = estado_atual
-
-            #conta_explorados += 1
-
-            for nodo in expande(estado_atual):
-                fronteira.append(nodo)  
 
 def dfs(estado):
     '''nao fornece solucao otima. diferenca entre bfs e dfs e' a estrutura de dados utilizada (no caso da dfs e' pilha).'''
-    if estado == ESTADO_FINAL:
-        return []
-        
-    encontrada = False
-    nodos_explorados = {}
-    fronteira = deque() #utiliza collections.deque para implementar a estrutura de dados e o método pop() para Pilha
-    estado_inicial = cria_nodo(estado, None, None, 0)
-    fronteira.append(estado_inicial)
-
-    #contador para testes de desempenho
-    #conta_explorados = 0 
+    funcao = lambda deque:deque.pop()
+    pilha = deque()
+    return busca_grafo(funcao,estado,pilha)
     
-    while not encontrada:
-        if len(fronteira) == 0:
-            return None
-            
-        estado_atual = fronteira.pop()
-
-        if estado_atual.estado == ESTADO_FINAL:
-            caminho = []
-
-            #print("total nodos explorados: ", conta_explorados)
-
-            while estado_atual.pai != None:
-                caminho.append(estado_atual)
-                estado_atual = estado_atual.pai
-            return list(reversed(caminho))
-            
-        if nodos_explorados.get(estado_atual.estado) == None:
-            nodos_explorados[estado_atual.estado] = estado_atual
-
-            #conta_explorados += 1
-
-            for nodo in expande(estado_atual):
-                fronteira.append(nodo)  
 
 def astar_hamming(estado):
     """
@@ -213,8 +156,9 @@ def astar_hamming(estado):
     :param estado: str
     :return:
     """
+    # substituir a linha abaixo pelo seu codigo
     fronteira = Lista_Prio_Nodo()
-    return busca_grafo(hamming.desempilha,estado,fronteira)
+    return busca_grafo(hamming.desempilha,estado,fronteira, HAMMING)
 
 
 def astar_manhattan(estado):
@@ -227,4 +171,4 @@ def astar_manhattan(estado):
     :return:
     """
     fronteira = Lista_Prio_Nodo()
-    return busca_grafo(manhattan.desempilha,estado,fronteira)
+    return busca_grafo(manhattan.desempilha,estado,fronteira, MANHATTAN)
