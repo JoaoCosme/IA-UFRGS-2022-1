@@ -2,6 +2,7 @@ import imp
 from operator import lt
 from typing import List, Optional
 from manhattan import calcula_distancia_manhattan
+from hamming import calcula_distancia_hamming
 
 class Nodo:
     """
@@ -20,6 +21,7 @@ class Nodo:
         self.acao = acao
         self.custo = custo
         self.custo_manhattan = calcula_distancia_manhattan(estado,custo)
+        self.custo_hamming = calcula_distancia_hamming(estado, custo)
         
         
     def __lt__(self,other):
