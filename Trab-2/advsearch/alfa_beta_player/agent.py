@@ -1,3 +1,4 @@
+from ftplib import error_reply
 import random
 import sys
 
@@ -6,6 +7,18 @@ import sys
 #
 # Nao esqueca de renomear 'your_agent' com o nome
 # do seu agente.
+
+
+def func_avalicao(stado, color):
+    return None
+
+
+def poda_alfa_beta():
+    return None
+
+
+def func_parada():
+    return False
 
 
 def make_move(the_board, color):
@@ -19,4 +32,3 @@ def make_move(the_board, color):
     # a primeira jogada com as pretas.
     # Remova-o e coloque a sua implementacao da poda alpha-beta
     return random.choice([(2, 3), (4, 5), (5, 4), (3, 2)])
-
