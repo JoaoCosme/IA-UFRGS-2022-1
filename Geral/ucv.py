@@ -2,7 +2,7 @@ from math import log, sqrt
 
 
 def ucb(vitoria_suc,jogadas_suc,jogadas_no):
-    return vitoria_suc/jogadas_suc + 1.1 * sqrt(2*log(jogadas_no)/jogadas_suc)
+    return vitoria_suc/jogadas_suc + 2*1 * sqrt(2*log(jogadas_no)/jogadas_suc)
 
 
 while True:
