@@ -1,7 +1,5 @@
-import imp
-import numbers
 import unittest
-import avalicao
+import advsearch.your_agent.aval_functs.avalicao as avaliacao
 import advsearch.othello.board as board
 from advsearch.othello.board import Board
 
@@ -10,7 +8,7 @@ class SimpleTest(unittest.TestCase):
 
 	# Returns True or False.
 	def test(self):		
-		self.assertEqual(1,avalicao.avalia(criaBoard(1,0),Board.BLACK),"Avalia corretamente para numero de pecas")
+		self.assertEqual(1,avaliacao.avalia(criaBoard(1,0),Board.BLACK),"Avalia corretamente para numero de pecas")
 
 if __name__ == '__main__':
 	unittest.main()
