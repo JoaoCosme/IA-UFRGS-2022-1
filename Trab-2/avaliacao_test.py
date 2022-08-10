@@ -7,7 +7,7 @@ from advsearch.othello.board import Board
 class SimpleTest(unittest.TestCase):
 
     def test(self):
-        self.assertEqual(3, avaliacao.avalia(
+        self.assertEqual(5, avaliacao.avalia(
             criaBoard(1, 0, 1), Board.BLACK), "Avalia corretamente para numero de pecas")
 
 

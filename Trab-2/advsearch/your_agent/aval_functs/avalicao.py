@@ -3,9 +3,11 @@ from advsearch.othello.board import Board
 import advsearch.your_agent.aval_functs.funcoes_avaliacao as funcoes_avaliacao
 
 PESO_QUANTIDADE_PECAS = 2
+PESO_DIFERENCA_PECAS = 2
 PESO_ESPACOS_VAZIOS = 1
 avaliacoes: List = [(funcoes_avaliacao.avaliacao_quantidade_de_pecas, PESO_QUANTIDADE_PECAS),
-                    (funcoes_avaliacao.avaliacao_menos_espacos_vazios, PESO_ESPACOS_VAZIOS)]
+                    (funcoes_avaliacao.avaliacao_menos_espacos_vazios, PESO_ESPACOS_VAZIOS),
+                    (funcoes_avaliacao.avaliacao_diferenca_pecas, PESO_DIFERENCA_PECAS)]
 
 
 def avalia(board: Board, cor):
