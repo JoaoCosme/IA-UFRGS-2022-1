@@ -4,7 +4,7 @@ import advsearch.othello.board as board
 from advsearch.othello.board import Board
 
 
-class SimpleTest(unittest.TestCase):
+class TestaAvaliacao(unittest.TestCase):
 
     def test(self):
         self.assertEqual(3, avaliacao.avalia(
