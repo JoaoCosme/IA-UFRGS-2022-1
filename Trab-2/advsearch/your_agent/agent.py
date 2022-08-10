@@ -1,5 +1,8 @@
+import imp
 import random
 import sys
+from advsearch.othello.board import Board
+from advsearch.your_agent.aval_functs.avalicao import avalia
 
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
@@ -7,6 +10,10 @@ import sys
 # Nao esqueca de renomear 'your_agent' com o nome
 # do seu agente.
 
+# Deve receber sempre a cor do nosso jogador
+# Retorna um inteiro com a pontuação de determiando estado
+def avalia(board:Board,cor)->int:
+    return avalia(board,cor)
 
 def make_move(the_board, color):
     """
