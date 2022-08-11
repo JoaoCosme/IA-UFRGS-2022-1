@@ -2,6 +2,8 @@ from calendar import c
 from advsearch.othello.board import Board
 
 coordenadas_cantos = [(0, 0), (0, 7), (7, 0), (7, 7)]
+
+#Retirado do artigo "An Analysis of Heuristics in Othello"
 valor_utilitario = [[4, -3, 2, 2, 2, 2, -3, 4], 
                     [-3, -4, -1, -1, -1, -1, -4, -3],
                     [2, -1, 1, 0, 0, 1, -1, 2], 
