@@ -1,5 +1,4 @@
 from calendar import c
-from ctypes import sizeof
 from advsearch.othello.board import Board
 
 coordenadas_cantos = [(0, 0), (0, 7), (7, 0), (7, 7)]
