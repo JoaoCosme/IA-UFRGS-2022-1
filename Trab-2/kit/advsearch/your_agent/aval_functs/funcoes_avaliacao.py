@@ -18,5 +18,5 @@ def avaliacao_mais_ataques_jogador(board:Board,cor):
     return board.legal_moves(cor);
 
 def avaliacao_e_vitoria(board:Board,cor):
-    return 100 if board.winner() == cor else 0;
+    return 100 if board.winner() == cor and board.is_terminal_state() else 0;
     
