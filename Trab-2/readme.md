@@ -14,7 +14,7 @@
 
 Para a avaliação dos estados de parada, foi utilizado o somatório de diversos critérios, no modelo
 
-$\sum_{i}^{n} f_i(estado)\times w_i$
+$\sum_ {i}^{n} f_i(estado)\times w_i$
 
 As avaliações utilizadas foram:
 
