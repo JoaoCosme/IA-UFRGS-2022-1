@@ -35,7 +35,7 @@ def condicao_parada(profundidade):
 
 def avalia_board(the_board: Board, color):
     posicoes = the_board.legal_moves(color)
-    max_aval = -100
+    max_aval = -99999999999999
     melhor_pos = None
 
     copia_board = the_board
