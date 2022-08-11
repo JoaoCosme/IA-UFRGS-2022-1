@@ -30,8 +30,21 @@ def condicao_parada(profundidade):
     return profundidade > PROFUNDIDADE_MAXIMA
 
 
-def avalia_board(board:Board,cor)->int:
-    return avalia(board,cor)
+def avalia_board(the_board:Board,color):
+    posicoes = the_board.legal_moves(color)
+    max_aval = -100
+    melhor_pos = None
+        
+    copia_board = the_board
+    
+    for posicao in posicoes:
+        copia_board.process_move(posicao,color)
+        avaliacao = avalia(copia_board,color)
+        if avaliacao > max_aval:
+            max_aval = avaliacao
+            melhor_pos = posicao
+        copia_board = the_board
+    return melhor_pos
 
 def make_move(the_board:Board, color):
     """
@@ -40,26 +53,11 @@ def make_move(the_board:Board, color):
     :param color: a character indicating the color to make the move ('B' or 'W')
     :return: (int, int) tuple with x, y indexes of the move (remember: 0 is the first row/column)
     """
-    posicoes = the_board.legal_moves(color)
-    max_aval = -100
-    melhor_pos = None
-    
-    print(posicoes)
-    
-    copia_board = the_board
-    
-    for posicao in posicoes:
-        copia_board.process_move(posicao,color)
-        avaliacao = avalia_board(copia_board,color)
-        if avaliacao > max_aval:
-            max_aval = avaliacao
-            melhor_pos = posicao
-        copia_board = the_board
     
     
     # o codigo abaixo apenas retorna um movimento aleatorio valido para
     # a primeira jogada com as pretas.
     # Remova-o e coloque a sua implementacao da poda alpha-beta
-    return melhor_pos
+    return avalia_board(the_board,color)
 
 
