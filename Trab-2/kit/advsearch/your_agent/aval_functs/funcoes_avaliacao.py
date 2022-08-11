@@ -30,11 +30,11 @@ def avaliacao_diferenca_pecas(board: Board, cor):
 
 
 def avaliacao_menos_ataques_oponente(board: Board, cor):
-    return -board.legal_moves(inverte_cor(cor))
+    return -len( board.legal_moves(inverte_cor(cor)))
 
 
 def avaliacao_mais_ataques_jogador(board: Board, cor):
-    return board.legal_moves(cor)
+    return len( board.legal_moves(cor))
 
 
 def avaliacao_e_vitoria(board: Board, cor):
@@ -42,8 +42,8 @@ def avaliacao_e_vitoria(board: Board, cor):
 
 
 def avaliacao_mobilidade(board: Board, cor):
-    jogadas_jogador = board.legal_moves(cor)
-    jogadas_oponent = board.legal_moves(inverte_cor(cor))
+    jogadas_jogador = len(board.legal_moves(cor))
+    jogadas_oponent = len(board.legal_moves(inverte_cor(cor)))
     
     if jogadas_jogador + jogadas_oponent == 0:
         return 0
