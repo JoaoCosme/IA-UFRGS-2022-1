@@ -25,6 +25,12 @@ As avaliações utilizadas foram:
 + Maximização de proximos estados do jogador
 + Avaliação se estado é terminal e vitoria do jogador
 
+As avaliações abaixo foram retiradas do artigo "An Analysis of Heuristics in Othello", disponivel neste [link](https://courses.cs.washington.edu/courses/cse573/04au/Project/mini1/RUSSIA/Final_Paper.pdf)
+
++ Estabilidade → Nesta avaliação testamos a porcentagem de peças em lugares com baixa chance de serem captuados
++ Cantos capturados → cantos nao podem ser flanqueados e, logo, sao excelentes posições
++ Mobilidade → Quantas proximas jogadas nos temos em relação a nosso oponente
+
 ### Poda Alfa-beta
 
 ## Testes
