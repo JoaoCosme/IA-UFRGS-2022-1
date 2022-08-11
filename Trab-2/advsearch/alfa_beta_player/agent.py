@@ -8,17 +8,23 @@ import sys
 # Nao esqueca de renomear 'your_agent' com o nome
 # do seu agente.
 
+#constante para condição de parada da poda alfa beta
+PROFUNDIDADE_MAXIMA = 6
 
 def func_avalicao(stado, color):
     return None
 
 
 def poda_alfa_beta():
+    '''
+    if condicao_parada():
+        return avalia()
+    '''
     return None
 
-
-def func_parada():
-    return False
+#funçao booleana que checa se a poda alfa beta chegou à profundidade maxima.
+def condicao_parada(profundidade):
+    return profundidade > PROFUNDIDADE_MAXIMA
 
 
 def make_move(the_board, color):
