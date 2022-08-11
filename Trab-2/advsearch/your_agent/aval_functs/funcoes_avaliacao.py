@@ -12,11 +12,11 @@ def avaliacao_diferenca_pecas(board:Board,cor):
     return board.num_pieces(cor) - board.num_pieces(inverte_cor(cor))
 
 def avaliacao_menos_ataques_oponente(board:Board,cor):
-    return 0;
+    return -board.legal_moves(inverte_cor(cor))
 
 def avaliacao_mais_ataques_jogador(board:Board,cor):
-    return 0;
+    return board.legal_moves(cor);
 
 def avaliacao_e_vitoria(board:Board,cor):
-    return 100 if board.num_pieces(cor) == 60 else 0;
+    return 100 if board.winner() == cor else 0;
     
