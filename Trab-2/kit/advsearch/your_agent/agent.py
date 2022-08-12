@@ -51,7 +51,7 @@ def make_move(the_board:Board, color):
 
 def player_max(tabuleiro, color, alpha, beta, depth): #Funcao que representa o jogador MAX
 
-    if cond_parada(tabuleiro, depth, color): #Testa condicao de parada 
+    if condicao_parada(tabuleiro, depth, color): #Testa condicao de parada 
         return avalia_pos(tabuleiro, color), NULL_MOVE #Caso ela retorne algo, devolve a funcao de avaliacao com movimento nulo
     
     # inicializacao das variaveis
@@ -76,7 +76,7 @@ def player_max(tabuleiro, color, alpha, beta, depth): #Funcao que representa o j
 
 def player_min(tabuleiro, color, alpha, beta, depth): #Funcao que representa o jogador MAX
 
-    if cond_parada(tabuleiro, depth, color): #Testa condicao de parada 
+    if condicao_parada(tabuleiro, depth, color): #Testa condicao de parada 
         return avalia_pos(tabuleiro, color), NULL_MOVE #Caso ela retorne algo, devolve a funcao de avaliacao com movimento nulo
     
     # inicializacao das variaveis
