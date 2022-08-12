@@ -59,7 +59,7 @@ Win% = 80%
 
 ## **Testes com 2 alfa_beta juntos:**
 
-**Profundidade máxima = 5** (ambos)
+**Profundidade máxima = 6** (ambos)
 
 ## **TESTE 1**
 

@@ -14,13 +14,13 @@ import pickle # biblioteca para fazer a cópia do estado do tabuleiro
 
 NULL_MOVE = (-1,-1) # variavel para representar um movimento nulo
 DEPTH_START = 0 # inicializa a profundidade com 0
-DEPTH_LIM = 6 # representa a profundidade máxima
+DEPTH_LIM = 5 # representa a profundidade máxima
 VAL_MAX =  10000 #valor máximo inicial
 VAL_MIN = -10000 #valor mínimo inicial
 
 # funçao booleana que checa se a poda alfa beta chegou à profundidade maxima.
-def condicao_parada(profundidade):
-    return profundidade > DEPTH_LIM
+def condicao_parada(tabuleiro,profundidade,cor):
+    return profundidade > DEPTH_LIM or tabuleiro.is_terminal_state() or (not tabuleiro.has_legal_move(cor) and profundidade == DEPTH_START)
 
 
 def avalia_board(the_board: Board, color):
@@ -42,7 +42,7 @@ def avalia_board(the_board: Board, color):
 
 def player_max(tabuleiro, color, alpha, beta, depth): #Função que representa o jogador MAX
 
-    if condicao_parada(depth): #Testa condição de parada 
+    if condicao_parada(tabuleiro,depth,color): #Testa condição de parada 
         return avalia(tabuleiro, color), NULL_MOVE #Caso ela retorne algo, devolve a função de avaliação com movimento nulo
     
     # inicialização das variaveis
@@ -67,7 +67,7 @@ def player_max(tabuleiro, color, alpha, beta, depth): #Função que representa o
 
 def player_min(tabuleiro, color, alpha, beta, depth): #Função que representa o jogador MIN
 
-    if condicao_parada(depth): #Testa condição de parada 
+    if condicao_parada(tabuleiro,depth,color): #Testa condição de parada 
         return avalia(tabuleiro, color), NULL_MOVE #Caso ela retorne algo, devolve a função de avaliação com movimento nulo
     
     # inicialização das variaveis
