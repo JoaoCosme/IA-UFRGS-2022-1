@@ -57,7 +57,7 @@ Win% = 80%
 
 **P.S: apesar da boa quantidade de vitórias, profundidade = 6 apresenta muitos timeouts durante as partidas. Não é recomendado o uso dessa profundidade.**
 
-## Testes com 2 alfa_beta juntos:
+## **Testes com 2 alfa_beta juntos:**
 
 **Profundidade máxima = 5** (ambos)
 
@@ -110,3 +110,53 @@ Win% = 80%
 |38|26|alfa_beta1|
 
 **OBS: neste caso, ganhou quem foi o primeiro a jogar.**
+
+## **TESTE 4**
+
+|avalia|alfa_beta_player1|alfa_beta_player2|
+|--|----|----|
+|**quantidade_de_pecas**|20|80|
+|**menos_espacos_vazios**|10|20|
+|**diferenca_pecas**|10|10|
+|**e_vitoria**|100|400|
+|**mobilidade**|10|20|
+|**cantos_capturados**|20|100|
+|**estabilidade**|40|70|
+
+|Pontuação alfa_beta1|Pontuação alfa_beta2|Vitória|
+|--------|--------|--------|
+|42|22|alfa_beta1|
+
+## **TESTE 5**
+
+|avalia|alfa_beta_player1|alfa_beta_player2|
+|--|----|----|
+|**quantidade_de_pecas**|10|20|
+|**menos_espacos_vazios**|10|10|
+|**diferenca_pecas**|10|10|
+|**e_vitoria**|100|100|
+|**mobilidade**|20|10|
+|**cantos_capturados**|30|20|
+|**estabilidade**|20|40|
+
+|Pontuação alfa_beta1|Pontuação alfa_beta2|Vitória|
+|--------|--------|--------|
+|39|25|alfa_beta2|
+
+## **TESTE 6**
+
+|avalia|alfa_beta_player1|alfa_beta_player2|
+|--|----|----|
+|**quantidade_de_pecas**|40|20|
+|**menos_espacos_vazios**|10|10|
+|**diferenca_pecas**|10|10|
+|**e_vitoria**|100|100|
+|**mobilidade**|20|10|
+|**cantos_capturados**|20|20|
+|**estabilidade**|40|40|
+
+|Pontuação alfa_beta1|Pontuação alfa_beta2|Vitória|
+|--------|--------|--------|
+|39|25|alfa_beta2|
+
+a sequência [20,10,10,100,10,20,40] apresenta os melhores resultados nos testes
