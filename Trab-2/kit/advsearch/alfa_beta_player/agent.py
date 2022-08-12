@@ -14,7 +14,7 @@ import pickle  # biblioteca para fazer a cópia do estado do tabuleiro
 
 NULL_MOVE = (-1, -1)  # variavel para representar um movimento nulo
 DEPTH_START = 0  # inicializa a profundidade com 0
-DEPTH_LIM = 6  # representa a profundidade máxima
+DEPTH_LIM = 3  # representa a profundidade máxima
 VAL_MAX = 10000  # valor máximo inicial
 VAL_MIN = -10000  # valor mínimo inicial
 

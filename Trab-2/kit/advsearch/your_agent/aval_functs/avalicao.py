@@ -3,11 +3,11 @@ from advsearch.othello.board import Board
 import advsearch.your_agent.aval_functs.funcoes_avaliacao as funcoes_avaliacao
 
 #Conjunto de tuplas avaliacao/peso
-avaliacoes: List = [(funcoes_avaliacao.avaliacao_quantidade_de_pecas, 40),
+avaliacoes: List = [(funcoes_avaliacao.avaliacao_quantidade_de_pecas, 20),
                     (funcoes_avaliacao.avaliacao_menos_espacos_vazios, 10),
                     (funcoes_avaliacao.avaliacao_diferenca_pecas, 10),
                     (funcoes_avaliacao.avaliacao_e_vitoria, 100),
-                    (funcoes_avaliacao.avaliacao_mobilidade,20),
+                    (funcoes_avaliacao.avaliacao_mobilidade,10),
                     (funcoes_avaliacao.avalia_cantos_capturados,20),
                     (funcoes_avaliacao.avalia_estabilidade,40)]
                     
