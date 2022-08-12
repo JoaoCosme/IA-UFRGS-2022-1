@@ -96,6 +96,7 @@ End of game reached!**
 
 |Pontuação alfa_beta1|Pontuação alfa_beta2|Vitória|
 |--------|--------|--------|
+
 |33|31|alfa_beta1|
 
 ## **TESTE 2**

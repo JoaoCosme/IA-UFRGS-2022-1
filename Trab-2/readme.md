@@ -10,6 +10,14 @@
 
 ### Função de Parada
 
+Para a função de parada, foi estabelecida uma profundidade máxima fixa de 5. 
+
+Testes foram realizados com profundidades 7, 6 e 5. Com profundidade 7, o alfa_beta_player era desclassificado devido ao alto número de timeouts. Para a profundidade 6, após 10 partidas contra um randomplayer, constatou-se um win rate de 80%. Todavia, um número relativamente alto de timeouts aconteceu entre as partidas, o que tornou a profundidade 6 um alto candidato a futuras desclassificações em torneios.
+
+Portanto, com um win rate de 70% a profundidade máxima setada para este algoritmo foi 5, garantindo um índice de vitórias relativamente bom e poucas jogadas inválidas.
+
+Tabelas com as pontuações e desempenhos do alfa_beta_player são apresentados na seção de Testes.
+
 ### Funções de Avaliação
 
 Para a avaliação dos estados de parada, foi utilizado o somatório de diversos critérios, no modelo
