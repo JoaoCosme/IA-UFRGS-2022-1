@@ -21,8 +21,8 @@ VAL_MIN = -10000  # valor mínimo inicial
 # funçao booleana que checa se a poda alfa beta chegou à profundidade maxima.
 
 
-def condicao_parada(profundidade):
-    return profundidade > DEPTH_LIM
+def condicao_parada(tabuleiro, profundidade, cor):
+    return profundidade > DEPTH_LIM or tabuleiro.is_terminal_state() or (not tabuleiro.has_legal_move(cor) and profundidade == DEPTH_START)
 
 
 def avalia_board(the_board: Board, color):
@@ -45,7 +45,7 @@ def avalia_board(the_board: Board, color):
 
 def player_max(tabuleiro, color, alpha, beta, depth):  # Função que representa o jogador MAX
 
-    if condicao_parada(depth):  # Testa condição de parada
+    if condicao_parada(tabuleiro,depth,color):  # Testa condição de parada
         # Caso ela retorne algo, devolve a função de avaliação com movimento nulo
         return avalia(tabuleiro, color), NULL_MOVE
 
@@ -74,7 +74,7 @@ def player_max(tabuleiro, color, alpha, beta, depth):  # Função que representa
 
 def player_min(tabuleiro, color, alpha, beta, depth):  # Função que representa o jogador MIN
 
-    if condicao_parada(depth):  # Testa condição de parada
+    if condicao_parada(tabuleiro,depth,color):  # Testa condição de parada
         # Caso ela retorne algo, devolve a função de avaliação com movimento nulo
         return avalia(tabuleiro, color), NULL_MOVE
 
