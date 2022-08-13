@@ -39,6 +39,12 @@ As avaliações abaixo foram retiradas do artigo "An Analysis of Heuristics in O
 
 ### Poda Alfa-beta
 
+A implementacação do MinMax com Poda Alfa Beta, então, une os dois conceitos vistos acima com a própria implementação do algoritmo MinMax. Além de informações como o tabuleiro, cor, ainda recebemos o valor de alfa, beta e a profundidade atual para ser usado na definição de parada.
+
+Duas principais funções foram definidas para seguir o algoritmo: player_min e player_max, onde cada qual segue as definições canônicas do algoritmo minmax. 
+
+Os checks adicionados ao algoritmo foram a verificação de falta de movimentos legais pra cor recebida, para evitar erros por indefinição e o uso da condição de parada para evitar uma demora na escolha da próxima ação.
+
 ## Testes
 
 ## **1. randomplayer vs alfa_beta_player**
