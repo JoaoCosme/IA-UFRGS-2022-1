@@ -1,8 +1,6 @@
 from functools import reduce
 from typing import List
 
-from chardet import detect_all
-
 MAX = 1000
 
 
