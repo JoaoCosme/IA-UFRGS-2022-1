@@ -1,6 +1,10 @@
-from functools import reduce
-import pdb
 import numpy as np
+
+def deriva_theta_0():
+    return 0
+
+def deriva_theta_1():
+    return 0
 
 def calcula_y(theta_0,theta_1,x):
     return theta_0 + theta_1 * x
