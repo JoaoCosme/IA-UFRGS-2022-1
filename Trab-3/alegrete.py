@@ -1,16 +1,18 @@
-import numpy as np
+COORDENADA_X = 0
+COORDENADA_Y = 1
+VALOR_CALCULADO = 2 
 
-def deriva_theta_0(theta_0,theta_1,data):
+def deriva_theta_0(erros_por_cordenada):
     somatorio_dos_erros = 0
-    for data_entry in data:
-        somatorio_dos_erros += calcula_y(theta_0,theta_1,data_entry[0]-data_entry[1])
-    return 2*somatorio_dos_erros/len(data)
+    for erro_por_coordenada in erros_por_cordenada:
+        somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO]
+    return 2*somatorio_dos_erros/len(erros_por_cordenada)
 
-def deriva_theta_1(theta_0,theta_1,data):
+def deriva_theta_1(erros_por_cordenada):
     somatorio_dos_erros = 0
-    for data_entry in data:
-        somatorio_dos_erros += calcula_y(theta_0,theta_1,data_entry[0]-data_entry[1])*data_entry[0]
-    return 2*somatorio_dos_erros/len(data)
+    for erro_por_coordenada in erros_por_cordenada:
+        somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO] * erro_por_coordenada[COORDENADA_X]
+    return 2*somatorio_dos_erros/len(erros_por_cordenada)
 
 def calcula_y(theta_0,theta_1,x):
     return theta_0 + theta_1 * x
@@ -28,6 +30,13 @@ def compute_mse(theta_0, theta_1, data):
         somatorio_dos_quadrados += pow(calcula_y(theta_0,theta_1,data_entry[0]) - data_entry[1],2)
     return somatorio_dos_quadrados/len(data)
 
+def calcula_erros_por_cordenada(theta_0,theta_1,data):
+    valor_por_cordenada = []
+    quantidade_de_dados = len(data)
+    for i in range(quantidade_de_dados):
+        estimativa_calculada = calcula_y(theta_0,theta_1,data[i][COORDENADA_X]) - data[i][COORDENADA_Y]
+        valor_por_cordenada.append([data[i][COORDENADA_X],data[i][COORDENADA_Y],estimativa_calculada])
+    return valor_por_cordenada
 
 def step_gradient(theta_0, theta_1, data, alpha):
     """
@@ -38,7 +47,8 @@ def step_gradient(theta_0, theta_1, data, alpha):
     :param alpha: float - taxa de aprendizado (a.k.a. tamanho do passo)
     :return: float,float - os novos valores de theta_0 e theta_1, respectivamente
     """
-    return theta_0 - alpha*deriva_theta_0(theta_0,theta_1,data),theta_1 - alpha*deriva_theta_1(theta_0,theta_1,data)
+    erros_por_cordenada = calcula_erros_por_cordenada(theta_0,theta_1,data)
+    return theta_0 - alpha*deriva_theta_0(erros_por_cordenada),theta_1 - alpha*deriva_theta_1(erros_por_cordenada)
 
 def fit(data, theta_0, theta_1, alpha, num_iterations):
     """
