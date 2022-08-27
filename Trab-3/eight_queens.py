@@ -1,10 +1,10 @@
 from functools import reduce
 from typing import List
 
-from chardet import detect_all
+MAX = 1000
 
 
-def evaluate(individual:List[int])->int:
+def evaluate(individual:List[int])->List[int]:
     """
     Recebe um indivíduo (lista de inteiros) e retorna o número de ataques
     entre rainhas na configuração especificada pelo indivíduo.
@@ -30,7 +30,7 @@ def evaluate(individual:List[int])->int:
             
     return reduce(lambda total,conflito_atual : total+conflito_atual,conflitos)
 
-def tournament(participants):
+def tournament(participants:List[List[int]])->List[int]:
     """
     Recebe uma lista com vários indivíduos e retorna o melhor deles, com relação
     ao numero de conflitos
@@ -38,7 +38,13 @@ def tournament(participants):
     :return:list melhor individuo da lista recebida
     """
     
-    raise NotImplementedError  # substituir pelo seu codigo
+    melhor = (MAX,[])
+    for participante in participants:
+        nota = evaluate(participante)
+        if nota < melhor[0]:
+            melhor = (nota,participante)
+
+    return melhor[1]
 
 
 def crossover(parent1, parent2, index):
