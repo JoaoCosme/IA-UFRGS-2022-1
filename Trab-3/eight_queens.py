@@ -1,5 +1,6 @@
 from functools import reduce
-from typing import List
+from pickle import EMPTY_LIST
+from typing import List, Tuple
 
 MAX = 1000
 
@@ -47,7 +48,7 @@ def tournament(participants:List[List[int]])->List[int]:
     return melhor[1]
 
 
-def crossover(parent1, parent2, index):
+def crossover(parent1:List, parent2:List, index:int)->Tuple[List,List]:
     """
     Realiza o crossover de um ponto: recebe dois indivíduos e o ponto de
     cruzamento (indice) a partir do qual os genes serão trocados. Retorna os
@@ -61,7 +62,19 @@ def crossover(parent1, parent2, index):
     :param index:int
     :return:list,list
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    filho1 = []
+    filho2 = []
+    
+    for i in range(index):
+        filho1.append(parent1[i])
+        filho2.append(parent2[i])
+        
+    for i in range(i+1,len(parent1)):
+        filho1.append(parent2[i])
+        filho2.append(parent1[i])
+    
+    return filho1,filho2
+   
 
 
 def mutate(individual, m):
