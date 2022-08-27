@@ -1,10 +1,16 @@
 import numpy as np
 
-def deriva_theta_0():
-    return 0
+def deriva_theta_0(theta_0,theta_1,data):
+    somatorio_dos_erros = 0
+    for data_entry in data:
+        somatorio_dos_erros += calcula_y(theta_0,theta_1,data_entry[0]-data_entry[1])
+    return 2*somatorio_dos_erros/len(data)
 
-def deriva_theta_1():
-    return 0
+def deriva_theta_1(theta_0,theta_1,data):
+    somatorio_dos_erros = 0
+    for data_entry in data:
+        somatorio_dos_erros += calcula_y(theta_0,theta_1,data_entry[0]-data_entry[1])*data_entry[0]
+    return 2*somatorio_dos_erros/len(data)
 
 def calcula_y(theta_0,theta_1,x):
     return theta_0 + theta_1 * x
@@ -32,8 +38,7 @@ def step_gradient(theta_0, theta_1, data, alpha):
     :param alpha: float - taxa de aprendizado (a.k.a. tamanho do passo)
     :return: float,float - os novos valores de theta_0 e theta_1, respectivamente
     """
-    raise NotImplementedError  # substituir pelo seu codigo
-
+    return theta_0 - alpha*deriva_theta_0(theta_0,theta_1,data),theta_1 - alpha*deriva_theta_1(theta_0,theta_1,data)
 
 def fit(data, theta_0, theta_1, alpha, num_iterations):
     """
