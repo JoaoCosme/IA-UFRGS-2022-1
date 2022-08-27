@@ -1,4 +1,8 @@
-def evaluate(individual):
+from functools import reduce
+from typing import List
+
+
+def evaluate(individual:List[int]):
     """
     Recebe um indivíduo (lista de inteiros) e retorna o número de ataques
     entre rainhas na configuração especificada pelo indivíduo.
@@ -7,8 +11,19 @@ def evaluate(individual):
     :param individual:list
     :return:int numero de ataques entre rainhas no individuo recebido
     """
-    raise NotImplementedError  # substituir pelo seu codigo
-
+    len_individuos = len(individual)
+    conflitos = [0] * len_individuos
+    
+    for i in range(len_individuos):
+        for j in range(i+1,len_individuos):
+            if individual[i] == individual[j]:
+                conflitos[i]+=1
+                continue
+            if individual[i] == individual[j]+j or individual[i] == individual[j]-j:
+                conflitos[i]+=1
+                continue
+            
+    return reduce(lambda x,y : x+y,conflitos)
 
 def tournament(participants):
     """
@@ -17,6 +32,7 @@ def tournament(participants):
     :param participants:list - lista de individuos
     :return:list melhor individuo da lista recebida
     """
+    
     raise NotImplementedError  # substituir pelo seu codigo
 
 
