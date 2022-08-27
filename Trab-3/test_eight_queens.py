@@ -28,20 +28,29 @@ class TestEightQueens(unittest.TestCase):
 
         self.assertEqual([2, 7, 4, 8, 1, 6, 3, 4], eight_queens.tournament(participants))
 
-    # def test_crossover(self):
-    #     """
-    #     Teste com o exemplo do enunciado
-    #     :return:
-    #     """
-    #     parent1 = [2, 4, 7, 4, 8, 5, 5, 2]
-    #     parent2 = [3, 2, 7, 5, 2, 4, 1, 1]
+    def test_simple_crossover(self):
+        """
+        Teste de crossover simples
+        """
+        filho1,filho2 = eight_queens.crossover([1,2,3],[3,2,1],2)
+        filhos = [filho1,filho2]
+        self.assertIn([1,2,1],filhos,"Filho gerado com sucesso")
+        self.assertIn([3,2,3],filhos,"Filho gerado com sucesso")
+    
+    def test_crossover(self):
+        """
+        Teste com o exemplo do enunciado
+        :return:
+        """
+        parent1 = [2, 4, 7, 4, 8, 5, 5, 2]
+        parent2 = [3, 2, 7, 5, 2, 4, 1, 1]
 
-    #     offspring1, offspring2 = eight_queens.crossover(parent1, parent2, 3)
+        offspring1, offspring2 = eight_queens.crossover(parent1, parent2, 3)
 
-    #     children = [offspring1, offspring2]
+        children = [offspring1, offspring2]
 
-    #     self.assertIn([2,4,7,5,2,4,1,1], children)
-    #     self.assertIn([3,2,7,4,8,5,5,2], children)
+        self.assertIn([2,4,7,5,2,4,1,1], children)
+        self.assertIn([3,2,7,4,8,5,5,2], children)
 
     # def test_mutate_prob_zero(self):
     #     """
