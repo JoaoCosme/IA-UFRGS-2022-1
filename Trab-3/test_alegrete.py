@@ -7,7 +7,10 @@ import numpy as np
 class TestAlegrete(unittest.TestCase):
     
     def test_compute_mse(self):
-        data = np.genfromtxt('Trab-3/alegrete.csv', delimiter=',')
+        try:
+            data = np.genfromtxt('Trab-3/alegrete.csv', delimiter=',')
+        except FileNotFoundError:
+            data = np.genfromtxt('alegrete.csv', delimiter=',')
         mse = alegrete.compute_mse(0, 0, data)
         self.assertAlmostEqual(66.78348986604624, mse, 8)  # comparacao de floats com 9 casas de precisao
 
