@@ -1,8 +1,10 @@
 from functools import reduce
 from typing import List
 
+from chardet import detect_all
 
-def evaluate(individual:List[int]):
+
+def evaluate(individual:List[int])->int:
     """
     Recebe um indivíduo (lista de inteiros) e retorna o número de ataques
     entre rainhas na configuração especificada pelo indivíduo.
@@ -13,15 +15,19 @@ def evaluate(individual:List[int]):
     """
     len_individuos = len(individual)
     conflitos = [0] * len_individuos
+    detecta_conflito = lambda i,j,deslocamento: individual[i] == individual[j] + deslocamento
+    na_mesma_linha = lambda i,j : detecta_conflito(i,j,0)
+    na_diagonal_superior = lambda i,j : detecta_conflito(i,j,i-j)
+    na_diagonal_inferior = lambda i,j : detecta_conflito(i,j,j-i)
     
     for i in range(len_individuos):
         for j in range(i+1,len_individuos):
-            if individual[i] == individual[j]:
+            if na_mesma_linha(i,j):
                 conflitos[i]+=1
-            elif individual[i] == individual[j]+i-j or individual[i] == individual[j]-i-j:
+            elif na_diagonal_superior(i,j) or na_diagonal_inferior(i,j):
                 conflitos[i]+=1
             
-    return reduce(lambda x,y : x+y,conflitos)
+    return reduce(lambda total,conflito_atual : total+conflito_atual,conflitos)
 
 def tournament(participants):
     """
