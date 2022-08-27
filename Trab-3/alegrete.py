@@ -9,13 +9,13 @@ def deriva_theta_0(erros_por_cordenada):
     somatorio_dos_erros = 0
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO]
-    return 2*somatorio_dos_erros/len(erros_por_cordenada)
+    return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 def deriva_theta_1(erros_por_cordenada):
     somatorio_dos_erros = 0
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO] * erro_por_coordenada[COORDENADA_X]
-    return 2*somatorio_dos_erros/len(erros_por_cordenada)
+    return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 def calcula_y(theta_0,theta_1,x):
     return theta_0 + theta_1 * x
