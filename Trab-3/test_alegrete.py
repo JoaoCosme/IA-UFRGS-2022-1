@@ -1,14 +1,15 @@
+import os
 import unittest
 import alegrete
 import numpy as np
 
 
-# class TestAlegrete(unittest.TestCase):
-
-    # def test_compute_mse(self):
-    #     data = np.genfromtxt('alegrete.csv', delimiter=',')
-    #     mse = alegrete.compute_mse(0, 0, data)
-    #     self.assertAlmostEqual(66.78348986604624, mse, 8)  # comparacao de floats com 9 casas de precisao
+class TestAlegrete(unittest.TestCase):
+    
+    def test_compute_mse(self):
+        data = np.genfromtxt('alegrete.csv', delimiter=',')
+        mse = alegrete.compute_mse(0, 0, data)
+        self.assertAlmostEqual(66.78348986604624, mse, 8)  # comparacao de floats com 9 casas de precisao
 
     # def test_step_gradient(self):
     #     # dataset do Quiz de Otimizacao Continua
@@ -25,5 +26,5 @@ import numpy as np
     #     self.assertAlmostEqual(0.55, new_theta1, 11)
 
 
-# if __name__ == '__main__':
-    # unittest.main()
+if __name__ == '__main__':
+    unittest.main()

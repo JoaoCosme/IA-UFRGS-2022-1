@@ -1,5 +1,9 @@
+from functools import reduce
+import pdb
 import numpy as np
 
+def calcula_y(theta_0,theta_1,x):
+    return theta_0 + theta_1 * x
 
 def compute_mse(theta_0, theta_1, data):
     """
@@ -9,7 +13,10 @@ def compute_mse(theta_0, theta_1, data):
     :param data: np.array - matriz com o conjunto de dados, x na coluna 0 e y na coluna 1
     :return: float - o erro quadratico medio
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    somatorio_dos_quadrados = 0
+    for data_entry in data:
+        somatorio_dos_quadrados += pow(calcula_y(theta_0,theta_1,data_entry[0]) - data_entry[1],2)
+    return somatorio_dos_quadrados/len(data)
 
 
 def step_gradient(theta_0, theta_1, data, alpha):
