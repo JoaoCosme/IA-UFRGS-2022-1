@@ -15,6 +15,7 @@ def evaluate(individual:List[int])->int:
     """
     len_individuos = len(individual)
     conflitos = [0] * len_individuos
+    
     detecta_conflito = lambda i,j,deslocamento: individual[i] == individual[j] + deslocamento
     na_mesma_linha = lambda i,j : detecta_conflito(i,j,0)
     na_diagonal_superior = lambda i,j : detecta_conflito(i,j,i-j)
