@@ -1,3 +1,6 @@
+from time import thread_time
+
+
 COORDENADA_X = 0
 COORDENADA_Y = 1
 VALOR_CALCULADO = 2 
@@ -6,13 +9,13 @@ def deriva_theta_0(erros_por_cordenada):
     somatorio_dos_erros = 0
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO]
-    return 2*somatorio_dos_erros/len(erros_por_cordenada)
+    return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 def deriva_theta_1(erros_por_cordenada):
     somatorio_dos_erros = 0
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO] * erro_por_coordenada[COORDENADA_X]
-    return 2*somatorio_dos_erros/len(erros_por_cordenada)
+    return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 def calcula_y(theta_0,theta_1,x):
     return theta_0 + theta_1 * x
@@ -65,4 +68,14 @@ def fit(data, theta_0, theta_1, alpha, num_iterations):
     :param num_iterations: int - numero de épocas/iterações para executar a descida de gradiente
     :return: list,list - uma lista com os theta_0 e outra com os theta_1 obtidos ao longo da execução
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    lista_theta_0 = []
+    lista_theta_1 = []
+    theta_0_atual = theta_0
+    theta_1_atual = theta_1
+    for i in range(num_iterations):
+        novo_theta_0,novo_theta_1 = step_gradient(theta_0_atual, theta_1_atual, data, alpha)
+        lista_theta_0.append(novo_theta_0)
+        lista_theta_1.append(novo_theta_1)
+        theta_0_atual = novo_theta_0
+        theta_1_atual = novo_theta_1
+    return lista_theta_0,lista_theta_1
