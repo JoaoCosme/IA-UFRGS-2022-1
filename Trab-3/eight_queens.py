@@ -18,10 +18,8 @@ def evaluate(individual:List[int]):
         for j in range(i+1,len_individuos):
             if individual[i] == individual[j]:
                 conflitos[i]+=1
-                continue
-            if individual[i] == individual[j]+j or individual[i] == individual[j]-j:
+            elif individual[i] == individual[j]+i-j or individual[i] == individual[j]-i-j:
                 conflitos[i]+=1
-                continue
             
     return reduce(lambda x,y : x+y,conflitos)
 

@@ -12,6 +12,7 @@ class TestEightQueens(unittest.TestCase):
         self.assertEqual(1,eight_queens.evaluate([2,2]))
         self.assertEqual(1,eight_queens.evaluate([2,3]))
         self.assertEqual(0,eight_queens.evaluate([2,4]))
+        self.assertEqual(3,eight_queens.evaluate([2,3,4]))
         # self.assertEqual(10, eight_queens.evaluate([2,2,4,8,1,6,3,4]))
 
     def test_tournament(self):
