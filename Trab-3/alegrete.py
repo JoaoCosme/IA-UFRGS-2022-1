@@ -74,7 +74,7 @@ def normaliza_features(entry_data):
         min = data[COORDENADA_X] if data[COORDENADA_X] < min else min
         max = data[COORDENADA_X] if data[COORDENADA_X] > max else max
 
-    def normaliza(x): return -1+((x-min)/(max-min))*2
+    def normaliza(x): return ((x-min)/(max-min))
 
     dados_normalizados = []
     for i in range(len(entry_data)):
