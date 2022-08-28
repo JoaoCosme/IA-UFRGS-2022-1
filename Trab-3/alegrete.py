@@ -1,5 +1,7 @@
 from time import thread_time
 
+from numpy import Infinity
+
 
 COORDENADA_X = 0
 COORDENADA_Y = 1
@@ -53,6 +55,22 @@ def step_gradient(theta_0, theta_1, data, alpha):
     erros_por_cordenada = calcula_erros_por_cordenada(theta_0,theta_1,data)
     return theta_0 - alpha*deriva_theta_0(erros_por_cordenada),theta_1 - alpha*deriva_theta_1(erros_por_cordenada)
 
+def normaliza_features(entry_data):
+    min = Infinity
+    max = - Infinity
+    
+    for data in entry_data:
+        min = data[COORDENADA_X] if data[COORDENADA_X] < min else min
+        max = data[COORDENADA_X] if data[COORDENADA_X] > max else max
+
+    normaliza = lambda x:  (x-min) / (max-min)
+    dados_normalizados = []
+    for i in range(len(entry_data)):
+        dados_normalizados.append([normaliza(entry_data[i][COORDENADA_X]),entry_data[i][COORDENADA_Y]])
+        
+    
+    return dados_normalizados
+
 def fit(data, theta_0, theta_1, alpha, num_iterations):
     """
     Para cada época/iteração, executa uma atualização por descida de
@@ -72,8 +90,11 @@ def fit(data, theta_0, theta_1, alpha, num_iterations):
     lista_theta_1 = []
     theta_0_atual = theta_0
     theta_1_atual = theta_1
+    
+    data_normalizada = normaliza_features(data)
+    
     for i in range(num_iterations):
-        novo_theta_0,novo_theta_1 = step_gradient(theta_0_atual, theta_1_atual, data, alpha)
+        novo_theta_0,novo_theta_1 = step_gradient(theta_0_atual, theta_1_atual, data_normalizada, alpha)
         lista_theta_0.append(novo_theta_0)
         lista_theta_1.append(novo_theta_1)
         theta_0_atual = novo_theta_0

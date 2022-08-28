@@ -4,7 +4,13 @@
 
 ## Regressão Linear
 
-Melhor run:
+### Normalização de Features
+
+Entre 0 e 1.
+
+### Testes
+
+Melhor teste:
 
 ```python
 theta_0s, theta_1s = alegrete.fit(

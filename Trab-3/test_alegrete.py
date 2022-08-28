@@ -27,6 +27,17 @@ class TestAlegrete(unittest.TestCase):
         # comparacao de floats com precisao de 11 casas
         self.assertAlmostEqual(0.95, new_theta0, 11)
         self.assertAlmostEqual(0.55, new_theta1, 11)
+    def test_normalizacao(self):
+        data = np.array([
+            [1, 3],
+            [2, 4],
+            [3, 4],
+            [4, 2]
+        ])
+        
+        data_normalizada = alegrete.normaliza_features(data)
+        
+        self.assertAlmostEqual(0.333333,data_normalizada[1][0],3)
 
 
 if __name__ == '__main__':
