@@ -1,6 +1,7 @@
 from functools import reduce
 from pickle import EMPTY_LIST
 from typing import List, Tuple
+import random
 
 MAX = 1000
 
@@ -86,7 +87,13 @@ def mutate(individual, m):
     :param m:int - probabilidade de mutacao
     :return:list - individuo apos mutacao (ou intacto, caso a prob. de mutacao nao seja satisfeita)
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    novo_individuo = individual.copy() #copia da lista de entrada
+    if random.random() < m:
+        mutacao = random.randint(1,8)  #sorteia numero aleatorio da mutacao
+        posicao_sorteada = random.randint(0,7) #sorteia posicao onde ocorre a mutacao
+        novo_individuo[posicao_sorteada] = mutacao
+        return novo_individuo  #retorna lista onde foi efetuada a mutacao
+    return individual
 
 
 def run_ga(g, n, k, m, e):

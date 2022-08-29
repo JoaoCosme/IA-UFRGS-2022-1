@@ -52,26 +52,26 @@ class TestEightQueens(unittest.TestCase):
         self.assertIn([2,4,7,5,2,4,1,1], children)
         self.assertIn([3,2,7,4,8,5,5,2], children)
 
-    # def test_mutate_prob_zero(self):
-    #     """
-    #     Teste simples: mutacao com prob = 0 deve retornar o individuo intacto
-    #     :return:
-    #     """
-    #     original = [2, 4, 7, 4, 8, 5, 5, 2]
-    #     mutated = eight_queens.mutate(original[:], 0)  # sends a copy of 'original'
-    #     self.assertEqual(original, mutated)
+    def test_mutate_prob_zero(self):
+        """
+        Teste simples: mutacao com prob = 0 deve retornar o individuo intacto
+        :return:
+        """
+        original = [2, 4, 7, 4, 8, 5, 5, 2]
+        mutated = eight_queens.mutate(original[:], 0)  # sends a copy of 'original'
+        self.assertEqual(original, mutated)
 
-    # def test_mutate_prob_one(self):
-    #     """
-    #     Teste simples: mutacao com prob = 1 deve retornar um individuo diferente.
-    #     Porem, pode haver o 'azar' da mutacao sortear o mesmo numero que ja estava.
-    #     Assim, se esse teste falhar, rode-o novamente para verificar se a falha foi
-    #     devido ao azar ou se o codigo esta mesmo com problema.
-    #     :return:
-    #     """
-    #     original = [2, 4, 7, 4, 8, 5, 5, 2]
-    #     mutated = eight_queens.mutate(original[:], 1)  # sends a copy of 'original'
-    #     self.assertNotEqual(original, mutated)
+    def test_mutate_prob_one(self):
+        """
+        Teste simples: mutacao com prob = 1 deve retornar um individuo diferente.
+        Porem, pode haver o 'azar' da mutacao sortear o mesmo numero que ja estava.
+        Assim, se esse teste falhar, rode-o novamente para verificar se a falha foi
+        devido ao azar ou se o codigo esta mesmo com problema.
+        :return:
+        """
+        original = [2, 4, 7, 4, 8, 5, 5, 2]
+        mutated = eight_queens.mutate(original[:], 1)  # sends a copy of 'original'
+        self.assertNotEqual(original, mutated)
 
     # def test_run_ga(self):
     #     """
