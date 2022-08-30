@@ -96,6 +96,17 @@ def mutate(individual, m):
     return individual
 
 
+def first_gen(n):
+    population = []
+    pop_counter = 0
+    while pop_counter < n:
+        new_individual = random.randint(1,8)
+        if new_individual not in population:
+            population.append(new_individual)
+            pop_counter += 1
+    return population
+
+
 def run_ga(g, n, k, m, e):
     """
     Executa o algoritmo genético e retorna o indivíduo com o menor número de ataques entre rainhas
@@ -106,4 +117,7 @@ def run_ga(g, n, k, m, e):
     :param e:int - número de indivíduos no elitismo
     :return:list - melhor individuo encontrado
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    generation_one = first_gen(n)
+    count_generations = 0
+    #while count_generations < g:
+    raise NotImplementedError
