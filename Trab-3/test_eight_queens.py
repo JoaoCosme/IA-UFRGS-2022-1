@@ -73,19 +73,19 @@ class TestEightQueens(unittest.TestCase):
         mutated = eight_queens.mutate(original[:], 1)  # sends a copy of 'original'
         self.assertNotEqual(original, mutated)
 
-    # def test_run_ga(self):
-    #     """
-    #     Testa APENAS se o algoritmo executa no tempo especificado.
-    #     Nao avalia a qualidade da solucao encontrada nem a corretude da implementacao
-    #     :return:
-    #     """
-    #     response = timer.timeout(
-    #         eight_queens.run_ga,
-    #         args=(100, 40, 2, 0.3, True),
-    #         time_limit=60, default='timeout'
-    #     )
-    #     if response == 'timeout':
-    #         self.fail("run_ga ran out of time")
+    def test_run_ga(self):
+         """
+         Testa APENAS se o algoritmo executa no tempo especificado.
+         Nao avalia a qualidade da solucao encontrada nem a corretude da implementacao
+         :return:
+         """
+         response = timer.timeout(
+             eight_queens.run_ga,
+             args=(100, 40, 2, 0.3, True),
+             time_limit=60, default='timeout'
+         )
+         if response == 'timeout':
+             self.fail("run_ga ran out of time")
 
 
 if __name__ == '__main__':

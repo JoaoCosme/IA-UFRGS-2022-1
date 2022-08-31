@@ -96,15 +96,28 @@ def mutate(individual, m):
     return individual
 
 
+
 def first_gen(n):
     population = []
     pop_counter = 0
     while pop_counter < n:
-        new_individual = random.randint(1,8)
+        new_individual = []
+        for i in range(8):
+            new_individual.append(random.randint(1,8))
         if new_individual not in population:
             population.append(new_individual)
             pop_counter += 1
     return population
+
+
+def tournament_participants(current_generation, k):
+    participants = []
+    while len(participants) < k:
+        participant_index = random.randint(0, (len(current_generation)-1))
+        if current_generation[participant_index] not in participants:
+            participants.append(current_generation[participant_index])
+    return participants
+
 
 
 def run_ga(g, n, k, m, e):
@@ -117,7 +130,22 @@ def run_ga(g, n, k, m, e):
     :param e:int - número de indivíduos no elitismo
     :return:list - melhor individuo encontrado
     """
-    generation_one = first_gen(n)
+    current_generation = first_gen(n)
     count_generations = 0
-    #while count_generations < g:
-    raise NotImplementedError
+    while count_generations < g:
+        next_generation = []
+        if e is True:
+            next_generation.append(tournament(current_generation))
+        while len(next_generation) < n:
+            p1 = tournament(tournament_participants(current_generation, k))
+            p2 = tournament(tournament_participants(current_generation, k))
+            o1,o2 = crossover(p1, p2, random.randint(1,7))
+            o1 = mutate(o1, m)
+            o2 = mutate(o2, m)
+            next_generation.append(o1)
+            next_generation.append(o2)
+        current_generation = next_generation
+        count_generations += 1
+    
+    best_of_last_gen = tournament(current_generation)
+    return best_of_last_gen
