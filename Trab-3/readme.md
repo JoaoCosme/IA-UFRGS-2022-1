@@ -11,10 +11,15 @@
 ## Algoritmo Genético
 
 Um do conjuntos de valores que consegue atingir a execução bem sucedida (0 Ataques):
+
 -> g:int (Número de gerações) = 20
+
 -> n:int (Número de indivíduos) = 10
+
 -> k:int (Número de participantes do torneio) = 2
+
 -> m:float (Probabilidade de mutação (entre 0 e 1)) = 0.5 
+
 -> e:bool (Verdadeiro se há elitismo) = True 
 
 Menor número de ataques = 0.
