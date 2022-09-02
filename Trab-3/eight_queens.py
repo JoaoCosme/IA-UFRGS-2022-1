@@ -1,5 +1,4 @@
 from functools import reduce
-from pickle import EMPTY_LIST
 from typing import List, Tuple
 import random
 
@@ -97,25 +96,25 @@ def mutate(individual, m):
 
 
 
-def first_gen(n):
-    population = []
-    pop_counter = 0
-    while pop_counter < n:
+def first_gen(n): #cria primeira geracao com n individuos distintos
+    generation_one = []
+    population_counter = 0
+    while population_counter < n:
         new_individual = []
         for i in range(8):
             new_individual.append(random.randint(1,8))
-        if new_individual not in population:
-            population.append(new_individual)
-            pop_counter += 1
-    return population
+        if new_individual not in generation_one: #garante que cada individuo adicionado eh diferente dos demais
+            generation_one.append(new_individual)
+            population_counter += 1
+    return generation_one
 
 
-def tournament_participants(current_generation, k):
+def tournament_participants(current_generation, k): #seleciona k individuos da geracao atual aleatoriamente para participar do torneio
     participants = []
     while len(participants) < k:
-        participant_index = random.randint(0, (len(current_generation)-1))
-        if current_generation[participant_index] not in participants:
-            participants.append(current_generation[participant_index])
+        individual_index = random.randint(0, (len(current_generation)-1)) #sorteia indice do individuo
+        if current_generation[individual_index] not in participants: #garante que o mesmo participante nao sera adicionado duas vezes
+            participants.append(current_generation[individual_index])
     return participants
 
 
@@ -134,9 +133,9 @@ def run_ga(g, n, k, m, e):
     count_generations = 0
     while count_generations < g:
         next_generation = []
-        if e is True:
+        if e is True: #se tem elitismo, o melhor da geracao atual passara para a proxima geracao
             next_generation.append(tournament(current_generation))
-        while len(next_generation) < n:
+        while len(next_generation) < n: #execucao do algoritmo genetico conforme visto em aula.
             p1 = tournament(tournament_participants(current_generation, k))
             p2 = tournament(tournament_participants(current_generation, k))
             o1,o2 = crossover(p1, p2, random.randint(1,7))
@@ -144,7 +143,7 @@ def run_ga(g, n, k, m, e):
             o2 = mutate(o2, m)
             next_generation.append(o1)
             next_generation.append(o2)
-        current_generation = next_generation
+        current_generation = next_generation #geracao criada neste loop sera a geracao atual do proximo loop
         count_generations += 1
     
     best_of_last_gen = tournament(current_generation)
