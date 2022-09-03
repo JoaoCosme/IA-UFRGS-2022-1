@@ -1,3 +1,5 @@
+from logging import log
+import pprint as pp
 from time import thread_time
 
 from numpy import Infinity
@@ -20,11 +22,12 @@ def deriva_theta_1(erros_por_cordenada):
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO] * \
             erro_por_coordenada[COORDENADA_X]
+    # print(f"Erros {somatorio_dos_erros}")
     return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 
 def calcula_y(theta_0, theta_1, x):
-    return theta_0 + theta_1 * x
+    return theta_0 + (theta_1 * x)
 
 
 def compute_mse(theta_0, theta_1, data):
@@ -67,19 +70,24 @@ def step_gradient(theta_0, theta_1, data, alpha):
 
 
 def normaliza_features(entry_data):
-    min = Infinity
-    max = - Infinity
+    min_x = Infinity
+    max_x = - Infinity
+    min_y = Infinity
+    max_y = - Infinity
 
     for data in entry_data:
-        min = data[COORDENADA_X] if data[COORDENADA_X] < min else min
-        max = data[COORDENADA_X] if data[COORDENADA_X] > max else max
+        min_x = data[COORDENADA_X] if data[COORDENADA_X] < min_x else min_x
+        max_x = data[COORDENADA_X] if data[COORDENADA_X] > max_x else max_x
+        min_y = data[COORDENADA_Y] if data[COORDENADA_Y] < min_y else min_y
+        max_y = data[COORDENADA_Y] if data[COORDENADA_Y] > max_y else max_y
 
-    def normaliza(x): return ((x-min)/(max-min))
+    def normaliza(x): return ((x-min_x)/(max_x-min_x))
+    def normaliza_y(x): return ((x-min_y)/(max_y-min_y))
 
     dados_normalizados = []
     for i in range(len(entry_data)):
         dados_normalizados.append(
-            [normaliza(entry_data[i][COORDENADA_X]), entry_data[i][COORDENADA_Y]])
+            [normaliza(entry_data[i][COORDENADA_X]), normaliza_y(entry_data[i][COORDENADA_Y])])
 
     return dados_normalizados
 
@@ -105,7 +113,7 @@ def fit(data, theta_0, theta_1, alpha, num_iterations, normalize_features=False)
     theta_1_atual = theta_1
 
     data_normalizada = normaliza_features(data) if normalize_features else data
-
+    
     for i in range(num_iterations):
         novo_theta_0, novo_theta_1 = step_gradient(
             theta_0_atual, theta_1_atual, data_normalizada, alpha)
