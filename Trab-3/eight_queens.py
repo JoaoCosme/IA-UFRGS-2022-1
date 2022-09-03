@@ -1,6 +1,6 @@
 from functools import reduce
-from pickle import EMPTY_LIST
 from typing import List, Tuple
+import random
 
 MAX = 1000
 
@@ -86,7 +86,37 @@ def mutate(individual, m):
     :param m:int - probabilidade de mutacao
     :return:list - individuo apos mutacao (ou intacto, caso a prob. de mutacao nao seja satisfeita)
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    novo_individuo = individual.copy() #copia da lista de entrada
+    if random.random() < m:
+        mutacao = random.randint(1,8)  #sorteia numero aleatorio da mutacao
+        posicao_sorteada = random.randint(0,7) #sorteia posicao onde ocorre a mutacao
+        novo_individuo[posicao_sorteada] = mutacao
+        return novo_individuo  #retorna lista onde foi efetuada a mutacao
+    return individual
+
+
+
+def first_gen(n): #cria primeira geracao com n individuos distintos
+    generation_one = []
+    population_counter = 0
+    while population_counter < n:
+        new_individual = []
+        for i in range(8):
+            new_individual.append(random.randint(1,8))
+        if new_individual not in generation_one: #garante que cada individuo adicionado eh diferente dos demais
+            generation_one.append(new_individual)
+            population_counter += 1
+    return generation_one
+
+
+def tournament_participants(current_generation, k): #seleciona k individuos da geracao atual aleatoriamente para participar do torneio
+    participants = []
+    while len(participants) < k:
+        individual_index = random.randint(0, (len(current_generation)-1)) #sorteia indice do individuo
+        if current_generation[individual_index] not in participants: #garante que o mesmo participante nao sera adicionado duas vezes
+            participants.append(current_generation[individual_index])
+    return participants
+
 
 
 def run_ga(g, n, k, m, e):
@@ -99,4 +129,22 @@ def run_ga(g, n, k, m, e):
     :param e:int - número de indivíduos no elitismo
     :return:list - melhor individuo encontrado
     """
-    raise NotImplementedError  # substituir pelo seu codigo
+    current_generation = first_gen(n)
+    count_generations = 0
+    while count_generations < g:
+        next_generation = []
+        if e is True: #se tem elitismo, o melhor da geracao atual passara para a proxima geracao
+            next_generation.append(tournament(current_generation))
+        while len(next_generation) < n: #execucao do algoritmo genetico conforme visto em aula.
+            p1 = tournament(tournament_participants(current_generation, k))
+            p2 = tournament(tournament_participants(current_generation, k))
+            o1,o2 = crossover(p1, p2, random.randint(1,7))
+            o1 = mutate(o1, m)
+            o2 = mutate(o2, m)
+            next_generation.append(o1)
+            next_generation.append(o2)
+        current_generation = next_generation #geracao criada neste loop sera a geracao atual do proximo loop
+        count_generations += 1
+    
+    best_of_last_gen = tournament(current_generation)
+    return best_of_last_gen
