@@ -22,7 +22,6 @@ def deriva_theta_1(erros_por_cordenada):
     for erro_por_coordenada in erros_por_cordenada:
         somatorio_dos_erros += erro_por_coordenada[VALOR_CALCULADO] * \
             erro_por_coordenada[COORDENADA_X]
-    # print(f"Erros {somatorio_dos_erros}")
     return 2.0*somatorio_dos_erros/len(erros_por_cordenada)
 
 
@@ -113,7 +112,7 @@ def fit(data, theta_0, theta_1, alpha, num_iterations, normalize_features=False)
     theta_1_atual = theta_1
 
     data_normalizada = normaliza_features(data) if normalize_features else data
-    
+
     for i in range(num_iterations):
         novo_theta_0, novo_theta_1 = step_gradient(
             theta_0_atual, theta_1_atual, data_normalizada, alpha)
