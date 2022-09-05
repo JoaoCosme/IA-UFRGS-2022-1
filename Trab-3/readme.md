@@ -8,6 +8,20 @@
 |Joao Pedro Cosme da Silva|00314792 |A
 |Eduardo André Leite | 00287684| A
 
+## Setup
+
+Para a instalação das dependências utilizadas neste trabalho, execute um dos comandos abaixos, de acordo com sua versão do `pip`:
+
+```python
+pip3 install -r requirements.txt
+```
+
+ou
+
+```python
+pip install -r requirements.txt
+```
+
 ## Algoritmo Genético
 
 Um do conjuntos de valores que consegue atingir a execução bem sucedida (0 Ataques):
