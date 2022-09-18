@@ -15,6 +15,7 @@
 import math
 from os import stat
 import pdb
+from re import I
 from turtle import st
 import mdp, util
 from learningAgents import ValueEstimationAgent
@@ -54,10 +55,15 @@ class ValueIterationAgent(ValueEstimationAgent):
     def iterValue(self):
         states = self.mdp.getStates()
         for i in range(self.iterations):
+            print(self.values)
             newValues = util.Counter()
             for state in states:
-                newValues[state] = self.mdp.getReward(state,None,None) + self.getQValue(state,self.computeActionFromValues(state))
-            self.values = newValues               
+                bestQ = 0
+                for action in self.mdp.getPossibleActions(state):
+                    qForAction = self.getQValue(state,action) 
+                    bestQ = qForAction if qForAction > bestQ else bestQ
+                newValues[state] = self.mdp.getReward(state,None,None) + bestQ
+            self.values = newValues
             
 
     def getValue(self, state):
@@ -92,7 +98,7 @@ class ValueIterationAgent(ValueEstimationAgent):
             value += 0.8 * self.discount * self.getValue(self.doAction('east',state))
             value += 0.1 * self.discount * self.getValue(self.doAction('noth',state))
             value += 0.1 * self.discount * self.getValue(self.doAction('south',state))
-        return 0;
+        return value;
         
     def computeActionFromValues(self, state):
         """
