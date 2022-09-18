@@ -67,11 +67,14 @@ class ValueIterationAgent(ValueEstimationAgent):
             self.values = newValues
 
     def computeValue(self, state):
-        bestQ = 0
-        for action in self.mdp.getPossibleActions(state):
-            qForAction = self.getQValue(state, action)
-            bestQ = qForAction if qForAction > bestQ else bestQ
-        return self.getReward(state) + bestQ
+        if self.mdp.getPossibleActions(state):
+            bestQ = -1000
+            for action in self.mdp.getPossibleActions(state):
+                qForAction = self.getQValue(state, action)
+                bestQ = qForAction if qForAction > bestQ else bestQ
+            return self.getReward(state) + bestQ
+        else:
+            return self.getReward(state)
 
     def getReward(self, state):
         return self.mdp.getReward(state, None, None)
@@ -99,6 +102,7 @@ class ValueIterationAgent(ValueEstimationAgent):
             value += state_prob[1] * self.discount * \
                 self.getValue(state_prob[0])
         
+        print(value)
         return value
 
     def computeActionFromValues(self, state):
@@ -115,7 +119,7 @@ class ValueIterationAgent(ValueEstimationAgent):
         if actions:
             next_states = {action: self.doAction(
                 action, state) for action in actions}
-            max_value = 0
+            max_value = -100000
             best_action = None
             for action in actions:
                 next_state_value = self.getValue(next_states[action])
