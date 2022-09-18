@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -20,8 +20,10 @@ from sre_parse import State
 from turtle import st
 
 from numpy import Infinity
-import mdp, util
+import mdp
+import util
 from learningAgents import ValueEstimationAgent
+
 
 class ValueIterationAgent(ValueEstimationAgent):
     """
@@ -32,7 +34,8 @@ class ValueIterationAgent(ValueEstimationAgent):
         for a given number of iterations using the supplied
         discount factor.
     """
-    def __init__(self, mdp:mdp.MarkovDecisionProcess, discount=0.9, iterations=100):
+
+    def __init__(self, mdp: mdp.MarkovDecisionProcess, discount=0.9, iterations=100):
         """
           Your value iteration agent should take an mdp on
           construction, run the indicated number of iterations
@@ -53,7 +56,6 @@ class ValueIterationAgent(ValueEstimationAgent):
         # Write value iteration code here
         "*** YOUR CODE HERE ***"
         self.iterValue()
-        
 
     def iterValue(self):
         states = self.mdp.getStates()
@@ -62,16 +64,16 @@ class ValueIterationAgent(ValueEstimationAgent):
             for state in states:
                 newValues[state] = self.computeValue(state)
             self.values = newValues
-    
-    def computeValue(self,state):
+
+    def computeValue(self, state):
         bestQ = 0
         for action in self.mdp.getPossibleActions(state):
-            qForAction = self.getQValue(state,action) 
+            qForAction = self.getQValue(state, action)
             bestQ = qForAction if qForAction > bestQ else bestQ
         return self.getReward(state) + bestQ
 
-    def getReward(self,state):
-        return self.mdp.getReward(state,None,None)
+    def getReward(self, state):
+        return self.mdp.getReward(state, None, None)
 
     def getValue(self, state):
         """
@@ -86,16 +88,18 @@ class ValueIterationAgent(ValueEstimationAgent):
         """
         "*** YOUR CODE HERE ***"
         value = 0
-        if action=='exit':
+
+        if action == 'exit':
             return self.getReward(state)
-        
-        states_probs = self.mdp.getTransitionStatesAndProbs(state,action)
-        
+
+        states_probs = self.mdp.getTransitionStatesAndProbs(state, action)
+
         for state_prob in states_probs:
-            value += state_prob[1] * self.discount * self.getValue(state_prob[0])
-        
+            value += state_prob[1] * self.discount * \
+                self.getValue(state_prob[0])
+
         return value
-        
+
     def computeActionFromValues(self, state):
         """
           The policy is the best action in the given state
@@ -108,7 +112,8 @@ class ValueIterationAgent(ValueEstimationAgent):
         "*** YOUR CODE HERE ***"
         actions = self.mdp.getPossibleActions(state)
         if actions:
-            next_states = {action:self.doAction(action,state) for action in actions}
+            next_states = {action: self.doAction(
+                action, state) for action in actions}
             max_value = -Infinity
             best_action = None
             for action in actions:
@@ -129,13 +134,13 @@ class ValueIterationAgent(ValueEstimationAgent):
 
     def getQValue(self, state, action):
         return self.computeQValueFromValues(state, action)
-    
-    def doAction(self,action,state):
+
+    def doAction(self, action, state):
         if action == 'north':
-            return (state[0],state[1]+1)
+            return (state[0], state[1]+1)
         elif action == 'south':
-            return (state[0],state[1]-1)
+            return (state[0], state[1]-1)
         elif action == 'west':
-            return (state[0]-1,state[1])
+            return (state[0]-1, state[1])
         else:
-            return (state[0]+1,state[1])
+            return (state[0]+1, state[1])
