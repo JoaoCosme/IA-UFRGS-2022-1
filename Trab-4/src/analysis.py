@@ -33,10 +33,10 @@ def question3a():
     # If not possible, return 'NOT POSSIBLE'
 
 def question3b():
-    # get the close reward, avoiding the cliff
-    answerDiscount = None
-    answerNoise = None
-    answerLivingReward = None
+    # get the close reward, aoiding the cliff
+    answerDiscount = 0.2
+    answerNoise = 0.1
+    answerLivingReward = 0
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
