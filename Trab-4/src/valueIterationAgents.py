@@ -13,6 +13,7 @@
 
 
 import math
+from os import stat
 import pdb
 from turtle import st
 import mdp, util
@@ -53,8 +54,10 @@ class ValueIterationAgent(ValueEstimationAgent):
     def iterValue(self):
         states = self.mdp.getStates()
         for i in range(self.iterations):
+            newValues = util.Counter()
             for state in states:
-                self.values[state] = 1                
+                newValues[state] = self.mdp.getReward(state,None,None) + self.getQValue(state,self.computeActionFromValues(state))
+            self.values = newValues               
             
 
     def getValue(self, state):
@@ -69,6 +72,28 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
+        value = 0
+        if self.mdp.isTerminal(state):
+            return 0
+        
+        if action=='north':
+            value += 0.8 * self.discount * self.getValue(self.doAction('north',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('west',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('east',state))
+        if action=='south':
+            value += 0.8 * self.discount * self.getValue(self.doAction('south',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('west',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('east',state))
+        if action=='west':
+            value += 0.8 * self.discount * self.getValue(self.doAction('west',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('noth',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('south',state))
+        else:
+            value += 0.8 * self.discount * self.getValue(self.doAction('east',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('noth',state))
+            value += 0.1 * self.discount * self.getValue(self.doAction('south',state))
+        return 0;
+        
     def computeActionFromValues(self, state):
         """
           The policy is the best action in the given state
@@ -109,6 +134,6 @@ class ValueIterationAgent(ValueEstimationAgent):
         elif action == 'south':
             return (state[0],state[1]-1)
         elif action == 'west':
-            return (state[0]+1,state[1])
-        else:
             return (state[0]-1,state[1])
+        else:
+            return (state[0]+1,state[1])
