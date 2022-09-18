@@ -62,10 +62,10 @@ class ValueIterationAgent(ValueEstimationAgent):
         for i in range(self.iterations):
             newValues = util.Counter()
             for state in states:
-                newValues[state] = self.computeValue(state)
+                newValues[state] = self.updateStateValue(state)
             self.values = newValues
 
-    def computeValue(self, state):
+    def updateStateValue(self, state):
         if self.mdp.getPossibleActions(state):
             bestQ = -1000
             for action in self.mdp.getPossibleActions(state):
@@ -138,13 +138,3 @@ class ValueIterationAgent(ValueEstimationAgent):
 
     def getQValue(self, state, action):
         return self.computeQValueFromValues(state, action)
-
-    def doAction(self, action, state):
-        if action == 'north':
-            return (state[0], state[1]+1)
-        elif action == 'south':
-            return (state[0], state[1]-1)
-        elif action == 'west':
-            return (state[0]-1, state[1])
-        else:
-            return (state[0]+1, state[1])
