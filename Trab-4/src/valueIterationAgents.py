@@ -98,10 +98,10 @@ class ValueIterationAgent(ValueEstimationAgent):
     
     def doAction(self,action,state):
         if action == 'north':
-            return [state[0],state[1]+1]
+            return (state[0],state[1]+1)
         elif action == 'south':
-            return [state[0],state[1]-1]
+            return (state[0],state[1]-1)
         elif action == 'west':
-            return [state[0]+1,state[1]]
+            return (state[0]+1,state[1])
         else:
-            return [state[0]-1,state[1]]
+            return (state[0]-1,state[1])
