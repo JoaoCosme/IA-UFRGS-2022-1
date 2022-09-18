@@ -55,16 +55,20 @@ class ValueIterationAgent(ValueEstimationAgent):
     def iterValue(self):
         states = self.mdp.getStates()
         for i in range(self.iterations):
-            print(self.values)
             newValues = util.Counter()
             for state in states:
-                bestQ = 0
-                for action in self.mdp.getPossibleActions(state):
-                    qForAction = self.getQValue(state,action) 
-                    bestQ = qForAction if qForAction > bestQ else bestQ
-                newValues[state] = self.mdp.getReward(state,None,None) + bestQ
+                newValues[state] = self.computeValue(state)
             self.values = newValues
-            
+    
+    def computeValue(self,state):
+        bestQ = 0
+        for action in self.mdp.getPossibleActions(state):
+            qForAction = self.getQValue(state,action) 
+            bestQ = qForAction if qForAction > bestQ else bestQ
+        return self.getReward(state) + bestQ
+
+    def getReward(self,state):
+        return self.mdp.getReward(state,None,None)
 
     def getValue(self, state):
         """
@@ -81,24 +85,10 @@ class ValueIterationAgent(ValueEstimationAgent):
         value = 0
         if self.mdp.isTerminal(state):
             return 0
-        
-        if action=='north':
-            value += 0.8 * self.discount * self.getValue(self.doAction('north',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('west',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('east',state))
-        if action=='south':
-            value += 0.8 * self.discount * self.getValue(self.doAction('south',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('west',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('east',state))
-        if action=='west':
-            value += 0.8 * self.discount * self.getValue(self.doAction('west',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('noth',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('south',state))
-        else:
-            value += 0.8 * self.discount * self.getValue(self.doAction('east',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('noth',state))
-            value += 0.1 * self.discount * self.getValue(self.doAction('south',state))
-        return value;
+        states_probs = self.mdp.getTransitionStatesAndProbs(state,action)
+        for state_prob in states_probs:
+            value += state_prob[1] * self.discount * self.getValue(self.doAction(self.computeActionFromValues(state),state))
+        return value
         
     def computeActionFromValues(self, state):
         """
