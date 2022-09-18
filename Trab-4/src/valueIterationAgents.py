@@ -87,7 +87,7 @@ class ValueIterationAgent(ValueEstimationAgent):
             return 0
         states_probs = self.mdp.getTransitionStatesAndProbs(state,action)
         for state_prob in states_probs:
-            value += state_prob[1] * self.discount * self.getValue(self.doAction(self.computeActionFromValues(state),state))
+            value += state_prob[1] * self.discount * self.getValue(state_prob[0])
         return value
         
     def computeActionFromValues(self, state):
