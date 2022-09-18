@@ -13,7 +13,7 @@
 
 ## Estruturas de Dados Usados pelo Programa Original
 
-+ estado -> um valor [x,y]
++ estado -> uma tupla (x,y)
 + ação -> string pura do tipo north, west, south, east
 
 ## Questões

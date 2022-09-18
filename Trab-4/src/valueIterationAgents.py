@@ -47,7 +47,15 @@ class ValueIterationAgent(ValueEstimationAgent):
 
         # Write value iteration code here
         "*** YOUR CODE HERE ***"
+        self.iterValue()
+        
 
+    def iterValue(self):
+        states = self.mdp.getStates()
+        for i in range(self.iterations):
+            for state in states:
+                self.values[state] = 1                
+            
 
     def getValue(self, state):
         """
@@ -61,7 +69,6 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
-
     def computeActionFromValues(self, state):
         """
           The policy is the best action in the given state
