@@ -2,9 +2,9 @@
 
 ## To-do
 
-+ [ ] Questão 1
-+ [ ] Questao 2
-+ [ ] Questao 3
++ [x] Questão 1
++ [x] Questao 2
++ [x] Questao 3
 + [ ] Questao 4
 + [ ] Questao 5
 + [ ] Questao 6
@@ -20,7 +20,14 @@
 
 ### 1 - Iteração de Valor
 
-[ ] computeActionFromValues(state)
-[ ] computeQValueFromValues(state, action)
+[x] computeActionFromValues(state)
+[x] computeQValueFromValues(state, action)
 
+### 2
+
+Resposta em `analysis.py`
+
+### 3
+
+Resposta em `analysis.py`
 
