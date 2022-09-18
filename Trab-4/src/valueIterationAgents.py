@@ -12,6 +12,9 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
+import math
+import pdb
+from turtle import st
 import mdp, util
 from learningAgents import ValueEstimationAgent
 
@@ -24,7 +27,7 @@ class ValueIterationAgent(ValueEstimationAgent):
         for a given number of iterations using the supplied
         discount factor.
     """
-    def __init__(self, mdp, discount=0.9, iterations=100):
+    def __init__(self, mdp:mdp.MarkovDecisionProcess, discount=0.9, iterations=100):
         """
           Your value iteration agent should take an mdp on
           construction, run the indicated number of iterations
@@ -58,7 +61,6 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
 
     def computeActionFromValues(self, state):
         """
@@ -70,7 +72,19 @@ class ValueIterationAgent(ValueEstimationAgent):
           terminal state, you should return None.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        actions = self.mdp.getPossibleActions(state)
+        if actions:
+            next_states = {action:self.doAction(action,state) for action in actions}
+            max_value = -10000
+            best_action = None
+            for action in actions:
+                next_state_value = self.getValue(next_states[action])
+                if next_state_value > max_value:
+                    max_value = next_state_value
+                    best_action = action
+            return best_action
+        else:
+            return None
 
     def getPolicy(self, state):
         return self.computeActionFromValues(state)
@@ -81,3 +95,13 @@ class ValueIterationAgent(ValueEstimationAgent):
 
     def getQValue(self, state, action):
         return self.computeQValueFromValues(state, action)
+    
+    def doAction(self,action,state):
+        if action == 'north':
+            return [state[0],state[1]+1]
+        elif action == 'south':
+            return [state[0],state[1]-1]
+        elif action == 'west':
+            return [state[0]+1,state[1]]
+        else:
+            return [state[0]-1,state[1]]
