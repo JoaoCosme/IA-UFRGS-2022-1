@@ -56,7 +56,6 @@ class ValueIterationAgent(ValueEstimationAgent):
         # Write value iteration code here
         "*** YOUR CODE HERE ***"
         self.iterValue()
-        print(self.values)
 
     def iterValue(self):
         states = self.mdp.getStates()
@@ -102,7 +101,6 @@ class ValueIterationAgent(ValueEstimationAgent):
             value += state_prob[1] * self.discount * \
                 self.getValue(state_prob[0])
         
-        print(value)
         return value
 
     def computeActionFromValues(self, state):
