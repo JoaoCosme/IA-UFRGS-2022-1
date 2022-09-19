@@ -5,9 +5,9 @@
 + [x] Questão 1
 + [x] Questao 2
 + [x] Questao 3
-+ [ ] Questao 4
-+ [ ] Questao 5
-+ [ ] Questao 6
++ [x] Questao 4
++ [x] Questao 5
++ [x] Questao 6
 + [ ] Questao 7
 + [ ] Questao 8
 
